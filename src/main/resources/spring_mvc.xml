@@ -19,7 +19,7 @@
     <!--3. 放行所有的静态资源-->
     <mvc:default-servlet-handler/>
 
-<!--    4. 下面的都是配置字符返回编码的-->
+    <!--    4. 下面的都是配置字符返回编码的-->
 
     <bean id="utf8Charset" class="java.nio.charset.Charset"
           factory-method="forName">
@@ -34,7 +34,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-<!--    配置thymeleaf-->
+    <!--    配置thymeleaf-->
 
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
