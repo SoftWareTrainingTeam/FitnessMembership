@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--如果value为true的时候，当返回内容为空时，那么返回的是一个空的对象，而不是null
+            如果这里的value为false(默认值)，mybatis在没有查询到内容的时候返回null-->
+        <setting name="returnInstanceForEmptyRow" value="true"/>
+        <!--显示sql语句，此行配置如果删除，则不在后台显示SQL语句-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+<!--配置驼峰与"_"匹配-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+</configuration>
