@@ -1,57 +1,45 @@
-# Ant Design Pro
+# 健身管理系统
 
-This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
 
-## Environment Prepare
 
-Install `node_modules`:
+## 下载依赖
+
+进入项目目录下的src文件夹
+
+执行
 
 ```bash
 npm install
 ```
 
-or
+或者
 
 ```bash
 yarn
 ```
 
-## Provided Scripts
+如果没有yarn需要先安装yarn
 
-Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
+```bash
+npm install yarn
+```
 
-Scripts provided in `package.json`. It's safe to modify or add additional script:
 
-### Start project
+
+## 启动项目
+
+执行
 
 ```bash
 npm start
 ```
 
-### Build project
+然后在浏览器地址栏访问**localhost:8000**
+
+## 打包项目
+
+执行
 
 ```bash
 npm run build
 ```
-
-### Check code style
-
-```bash
-npm run lint
-```
-
-You can also use script to auto fix some lint error:
-
-```bash
-npm run lint:fix
-```
-
-### Test code
-
-```bash
-npm test
-```
-
-## More
-
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
