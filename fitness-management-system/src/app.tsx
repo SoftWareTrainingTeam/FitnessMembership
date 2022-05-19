@@ -35,17 +35,15 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
-  // 如果不是登录页面，执行
-  if (history.location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
-    return {
-      fetchUserInfo,
-      currentUser,
-      settings: defaultSettings,
-    };
+  const currentUser = await fetchUserInfo();
+  if (currentUser && history.location.pathname === loginPath) {
+    const { query } = history.location;
+    const { redirect } = query as { redirect: string };
+    history.push(redirect || '/');
   }
   return {
     fetchUserInfo,
+    currentUser: currentUser ?? undefined,
     settings: defaultSettings,
   };
 }
