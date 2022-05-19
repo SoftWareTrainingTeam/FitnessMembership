@@ -9,39 +9,29 @@
   overflow: auto;
   background: @layout-body-background;
 }
+
 .formwrapper {
-  width:640px;
+  width: 640px;
   display: flex;
+  background: #fff;
+  animation: show 1s ease-in-out;
 }
+
+@keyframes show {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .content {
-  padding: 0 32px;
   flex: 1;
-  // background: #474a59;
-  box-shadow: 0px 0px 40px 16px rgb(0 0 0 / 22%);
-}
-.input {
-  padding-left: 0;
-  padding-right: 0;
-  &::after {
-    content: '';
-    position: absolute;
-    left: -100%;
-    bottom: -2px;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, #ff00af, #ff0024);
-    transition: left .4s;
-  }
-  &:hover::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, #ff00af, #ff0024);
-    transition: left .4s;
-  }
+  padding: 0 32px;
 }
 
 @media (min-width: @screen-md-min) {
