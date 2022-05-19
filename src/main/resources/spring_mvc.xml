@@ -34,8 +34,24 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <!--springmvc拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--拦截所有的路径-->
+            <mvc:mapping path="/**"/>
+            <bean class="com.fitness.interceptor.CorsInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!--不拦截登录-->
+            <mvc:exclude-mapping path="/api/login"/>
+            <!--不拦截/-->
+            <mvc:exclude-mapping path="/"/>
+            <bean class="com.fitness.interceptor.TokenInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
     <!--    配置thymeleaf-->
-
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/templates/"/>
@@ -55,5 +71,4 @@
         <property name="templateEngine" ref="templateEngine"/>
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
-
 </beans>

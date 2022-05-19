@@ -15,7 +15,7 @@
          <property name="locations" value="classpath:jdbc.properties"></property>
     </bean>-->
 
-
+    <!--加载jdbc配置文件-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <!--1. 配置数据源:阿里数据源  -->
@@ -68,5 +68,4 @@
             </array>
         </property>
     </bean>
-
 </beans>

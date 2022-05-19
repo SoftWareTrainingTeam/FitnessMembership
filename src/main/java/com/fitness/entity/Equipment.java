@@ -1,7 +1,5 @@
 package com.fitness.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
 /**
