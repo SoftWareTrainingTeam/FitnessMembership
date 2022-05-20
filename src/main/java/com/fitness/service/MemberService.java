@@ -41,4 +41,11 @@ public interface MemberService {
    * @return 通用结果实体类
    */
   Result insertMember(Member member);
+
+  /**
+   * 根据id查询会员信息
+   * @param id 会员id
+   * @return 会员信息
+   */
+  Result getMembersById(String id);
 }

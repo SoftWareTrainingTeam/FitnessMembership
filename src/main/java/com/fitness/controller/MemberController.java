@@ -30,6 +30,12 @@ public class MemberController {
     return memberService.getMembersByPage(startPage, pageSize);
   }
 
+  //单个会员信息
+  @GetMapping("/api/member/{id}")
+  public Result getMemberById(@PathVariable("id") String id) {
+    return memberService.getMembersById(id);
+  }
+
   //注册新会员
   @PostMapping("/api/member")
   public Result registerMember(@Validated @RequestBody Member member) {

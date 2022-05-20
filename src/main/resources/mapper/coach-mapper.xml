@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fitness.dao.CoachMapper">
+
+    <sql id="baseQuery">
+        select coach_id,
+               coach_name,
+               coach_sex,
+               coach_birth,
+               coach_tel,
+               entry_time,
+               coach_type,
+               coach_level
+        from coach
+    </sql>
+
+    <!--1. 根据id查询教练信息-->
+    <select id="getCoachById" resultType="com.fitness.entity.Coach">
+        <include refid="baseQuery"/>
+        where coach_id = #{id}
+    </select>
+
+    <!--2. 查询所有教练-->
+    <select id="getAllCoaches" resultType="com.fitness.entity.Coach">
+        <include refid="baseQuery"/>
+    </select>
+
+    <!--3. 模糊查询教练信息-->
+    <select id="getCoachByVague" resultType="com.fitness.entity.Coach">
+        <include refid="baseQuery"/>
+        where coach_id like concat('%', #{keywords}, '%') or
+        coach_name like concat('%', #{keywords}, '%') or
+        coach_sex like concat('%', #{keywords}, '%') or
+        coach_tel like concat('%', #{keywords}, '%') or
+        coach_type like concat('%', #{keywords}, '%') or
+        coach_levl like concat('%', #{keywords}, '%')
+    </select>
+
+    <!--4. 查询所有教练数量-->
+    <select id="getAllCoachesNumber" resultType="java.lang.Integer">
+        select count(*) from coach
+    </select>
+
+    <!--5. 注册新教练-->
+    <insert id="insertCoach">
+        insert into coach(coach_name, coach_sex, coach_birth, coach_tel,
+                          entry_time, coach_type, coach_level)
+        values (#{coachName}, #{coachSex}, #{coachBirth}, #{coachTel},
+                #{entryTime}, #{coachType}, #{coachLevel})
+    </insert>
+
+    <!--6. 注销教练信息-->
+    <delete id="deleteCoach">
+        delete from coach where coach_id = #{id}
+    </delete>
+
+    <!--7. 更新教练信息-->
+    <update id="updateCoach">
+        update coach set coach_name = #{coachName}, coach_sex = #{coachSex},
+                         coach_birth = #{coachBirth}, coach_type = #{coachType},
+                         coach_levle = #{coachLevel}
+        where coach_id = #{coachId}
+    </update>
+</mapper>

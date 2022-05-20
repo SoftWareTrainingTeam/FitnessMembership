@@ -59,4 +59,10 @@ public class MemberServiceImpl implements MemberService {
     memberMapper.insertMember(member);
     return new Result(Result.OK, "注册成功~");
   }
+
+  @Override
+  public Result getMembersById(String id) {
+    Member member = memberMapper.getMemberById(id);
+    return new Result<Member>(Result.OK, "请求成功~", member);
+  }
 }
