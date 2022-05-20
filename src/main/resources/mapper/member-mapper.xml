@@ -39,8 +39,7 @@
     </select>
 
     <!--5. 新增会员-->
-    <insert id="insertMember" useGeneratedKeys="true"
-            keyProperty="memberId" keyColumn="member_id">
+    <insert id="insertMember">
         insert into member (name, sex, birthday, tel_number, regist_time, address)
         values (#{name}, #{sex}, #{birthday},
                 #{telNumber}, #{registTime}, #{address})

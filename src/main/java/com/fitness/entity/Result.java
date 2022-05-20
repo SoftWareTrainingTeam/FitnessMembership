@@ -20,8 +20,12 @@ public class Result<T> {
   //成功
   public final static int OK = 200;
 
+  //参数格式错误
+  public final static int PARAMETER_ERROR = 400;
+
   //认证
   public final static int NOT_ALLOWED = 401;
+
 
   //错误
   public final static int ERROR = 500;

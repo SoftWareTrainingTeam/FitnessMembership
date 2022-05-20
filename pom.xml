@@ -170,6 +170,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.16</version>
         </dependency>
+        <!--hibernate validator-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.1.7.Final</version>
+        </dependency>
     </dependencies>
 
     <build>

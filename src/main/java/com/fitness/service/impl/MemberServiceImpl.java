@@ -3,12 +3,14 @@ package com.fitness.service.impl;
 import com.fitness.dao.MemberMapper;
 import com.fitness.entity.Member;
 import com.fitness.entity.Result;
+import com.fitness.exception.PageNumberException;
 import com.fitness.service.MemberService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
  * @description: 会员业务实现类
  */
 @Service
+@Transactional
 public class MemberServiceImpl implements MemberService {
 
   private MemberMapper memberMapper;
@@ -30,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public Result<PageInfo<Member>> getMembersByPage(Integer startPage, Integer pageSize) {
     if (startPage < 1) {
-      throw new RuntimeException("起使页码无效~");
+      throw new PageNumberException("起使页码无效~");
     }
     Page<Member> page = PageHelper.startPage(startPage, pageSize);
     List<Member> members = memberMapper.getAllMembers();

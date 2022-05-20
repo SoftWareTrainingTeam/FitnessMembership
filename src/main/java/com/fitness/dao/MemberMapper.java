@@ -44,7 +44,7 @@ public interface MemberMapper {
    * @param member 带插入的会员
    * @return 返回自动生成的主键以及会员信息
    */
-  Member insertMember(Member member);
+  void insertMember(Member member);
 
 
   /**
