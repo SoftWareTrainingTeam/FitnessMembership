@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fitness.dao.MemberMapper">
+
+    <!--基础查询信息-->
+    <sql id="baseQuery">
+        select member_id, name, sex, birthday, tel_number, regist_time, address
+        from member
+    </sql>
+
+    <!--可以简化，给实体类取别名-->
+    <!--1. 查询所有会员信息-->
+    <select id="getAllMembers" resultType="com.fitness.entity.Member">
+        <include refid="baseQuery"/>
+    </select>
+    <!--2. 根据id获取会员信息-->
+    <select id="getMemberById" resultType="com.fitness.entity.Member">
+        <include refid="baseQuery"/>
+        where member_id = #{id}
+    </select>
+
+    <!--3. 模糊查询-->
+    <select id="getPartMemberByPage" resultType="com.fitness.entity.Member">
+        <include refid="baseQuery"/>
+        where
+        member_id like concat('%', #{info}, '%') or
+        name like concat('%', #{info}, '%') or
+        tel_number like concat('%', #{info}, '%') or
+        regist_time like concat('%', #{info}, '%') or
+        address like concat('%', #{info}, '%')
+    </select>
+
+    <!--4. 查询会员数量-->
+    <select id="getAllMemberNumber" resultType="java.lang.Integer">
+        select count(*)
+        from member
+    </select>
+
+    <!--5. 新增会员-->
+    <insert id="insertMember">
+        insert into member (name, sex, birthday, tel_number, regist_time, address)
+        values (#{name}, #{sex}, #{birthday},
+                #{telNumber}, #{registTime}, #{address})
+    </insert>
+
+    <!--6. 根据id修改会员信息-->
+    <update id="updateMember">
+        update member
+        set name        = #{name},
+            sex         = #{sex},
+            birthday    = #{birthday},
+            tel_number  = #{telNumber},
+            regist_time = #{registTime},
+            address     = #{address}
+        where member_id = #{memberId}
+    </update>
+
+    <!--7. 根据id删除会员-->
+    <delete id="deleteMember">
+        delete
+        from member
+        where member_id = #{id}
+    </delete>
+
+    <!--8. 批量注册会员-->
+    <insert id="insertMembersByBatch">
+        insert into member (name, sex, birthday, tel_number, regist_time, address)
+        values
+        <foreach collection="members" item="member" separator=",">
+            (#{name}, #{sex}, #{birthday},
+            #{telNumber}, #{registTime}, #{address})
+        </foreach>
+    </insert>
+</mapper>
