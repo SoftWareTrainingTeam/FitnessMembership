@@ -45,6 +45,8 @@
             <mvc:mapping path="/**"/>
             <!--不拦截登录-->
             <mvc:exclude-mapping path="/api/login"/>
+<!--            不拦截获取验证码-->
+            <mvc:exclude-mapping path="/api/captcha"/>
             <!--不拦截/-->
             <mvc:exclude-mapping path="/"/>
             <bean class="com.fitness.interceptor.TokenInterceptor"/>

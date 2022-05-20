@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
@@ -7,6 +7,35 @@
 <body>
 
 <h1>这里是控制面板主页</h1>
+
+<!--<h2>测试新增用户</h2>
+<div>
+    <form th:action="@{/user/register}" method="post">
+        <input type="number" name="userId" id="userId">
+        <br>
+        <input type="password" name="password" id="password">
+        <br>
+        <input type="text" name="username" id="username">
+        <br>
+        <input type="number" name="type" id="type">
+        <br>
+        <input type="submit">
+    </form>
+</div>-->
+
+<h2>测试登录</h2>
+<div>
+    <img th:src="@{/api/captcha}" alt="验证码">
+    <form th:action="@{/api/login}" method="post">
+        用户名：<input type="text" name="username" id="username">
+        <br>
+        密码：<input type="text" name="password" id="password">
+        <br>
+        验证码：<input type="text" name="code" id="code">
+        <br>
+        <input type="submit">
+    </form>
+</div>
 
 </body>
 </html>

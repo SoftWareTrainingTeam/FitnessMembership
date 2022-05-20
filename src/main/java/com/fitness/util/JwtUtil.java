@@ -15,7 +15,9 @@ import java.util.Map;
  */
 public class JwtUtil {
 
-  // 签名
+  /**
+   * 签名
+   */
   private static String signature = "chiatso@163.com";
 
   /**
@@ -29,7 +31,8 @@ public class JwtUtil {
       builder.withClaim(k, v);
     });
     Calendar instance = Calendar.getInstance();
-    instance.add(Calendar.MINUTE, 30); //token 有效时间30分钟
+    //token 有效时间30分钟
+    instance.add(Calendar.MINUTE, 30);
     builder.withExpiresAt(instance.getTime());
     return builder.sign(Algorithm.HMAC256(signature));
   }
