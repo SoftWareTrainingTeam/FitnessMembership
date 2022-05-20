@@ -2,11 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>首页</title>
+    <title>测试页</title>
 </head>
 <body>
 
-<h1>这里是控制面板主页</h1>
+<h1>这里是后端测试页面</h1>
+<h2>项目已成功运行</h2>
+<h3>本次部署时间：5/21 早</h3>
+
+<h4>已完成功能</h4>
+<p>登录、验证码接口</p>
+<p>会员、教练、器材的增删查改</p>
 
 <!--<h2>测试新增用户</h2>
 <div>
@@ -25,7 +31,9 @@
 
 <h2>测试登录</h2>
 <div>
-    <img th:src="@{/api/captcha}" alt="验证码">
+    <a th:href="@{/api/captcha}">点击获取验证码（自己解析图片）</a>
+    <br>
+    <a href="https://tool.chinaz.com/tools/imgtobase">解析base64的网页工具</a>
     <form th:action="@{/api/login}" method="post">
         用户名：<input type="text" name="username" id="username">
         <br>

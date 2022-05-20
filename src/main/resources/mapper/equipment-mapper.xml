@@ -3,7 +3,36 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fitness.dao.EquipmentMapper">
+    <sql id="allField">
+        equip_id
+        ,type,label,purchase_date,available
+    </sql>
     <select id="selectAllEquip" resultType="com.fitness.entity.Equipment">
-        select equip_id,type,label,purchase_date,available from equipment;
-	</select>
+        select
+        <include refid="allField"/>
+        from equipment
+    </select>
+    <select id="selectEquipById" resultType="com.fitness.entity.Equipment">
+        select
+        <include refid="allField"/>
+        from equipment
+        where equip_id=#{id}
+    </select>
+    <insert id="insertEquip" parameterType="com.fitness.entity.Equipment">
+        insert into equipment (<include refid="allField"/>)
+        values (#{equipId},#{type},#{label},#{purchaseDate},#{available})
+    </insert>
+    <update id="updateEquip" parameterType="com.fitness.entity.Equipment">
+        update equipment
+        set type         = #{type},
+            label=#{label},
+            purchase_date=#{purchaseDate},
+            available=#{available}
+        where equip_id = #{equipId}
+    </update>
+    <delete id="deleteEquip">
+        delete
+        from equipment
+        where equip_id = #{equipId}
+    </delete>
 </mapper>

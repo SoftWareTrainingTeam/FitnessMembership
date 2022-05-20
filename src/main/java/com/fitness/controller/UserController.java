@@ -20,14 +20,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(path = "/register",method = RequestMethod.POST)
-    public String register(Model model, User user){
-        Map<String,Object> map = userService.register(user);
-        if (map==null||map.isEmpty()){
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    public String register(Model model, User user) {
+        Map<String, Object> map = userService.register(user);
+        if (map == null || map.isEmpty()) {
             model.addAttribute("msg", "注册成功!");
             model.addAttribute("target", "/index");
             return "success";
-        }else{
+        } else {
             model.addAttribute("usernameMsg", map.get("usernameMsg"));
             model.addAttribute("passwordMsg", map.get("passwordMsg"));
             return "failed";

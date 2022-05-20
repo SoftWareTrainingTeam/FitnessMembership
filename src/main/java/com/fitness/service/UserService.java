@@ -25,8 +25,8 @@ public class UserService implements Constant {
     @Autowired
     UserMapper userMapper;
 
-    public Map<String,Object> register(User user){
-        Map<String,Object> map = new HashMap<>();
+    public Map<String, Object> register(User user) {
+        Map<String, Object> map = new HashMap<>();
 
         // 空值处理
         if (user == null) {
@@ -40,58 +40,58 @@ public class UserService implements Constant {
             map.put("passwordMsg", "密码不能为空!");
             return map;
         }
-        if (user.getType()!=MANAGER_TYPE&&user.getType()!=SUPER_MANAGER_TYPE) {
+        if (user.getType() != MANAGER_TYPE && user.getType() != SUPER_MANAGER_TYPE) {
             map.put("emailMsg", "用户类型为空或不正确！");
             return map;
         }
 
         // 验证账号是否存在
         User checkUser = userMapper.selectByName(user.getUsername());
-        if (checkUser!=null){
+        if (checkUser != null) {
             map.put("usernameMsg", "该账号已存在!");
             return map;
         }
 
         // 注册用户
         // 这里多加上一个字段（1-100的随机数）是为了防止MD5被字典反向破解
-        user.setPassword(Util.getMd5(user.getPassword()+PASSWORD_APPEND));
+        user.setPassword(Util.getMd5(user.getPassword() + PASSWORD_APPEND));
         userMapper.insertUser(user);
 
         return map;
     }
 
-    public Result<String> login(String username, String password){
+    public Result<String> login(String username, String password) {
         Result<String> result = new Result<>();
-        if(StringUtils.isBlank(username)){
+        if (StringUtils.isBlank(username)) {
             result.setCode(ERROR);
             result.setMsg("用户名不能为空");
             return result;
         }
-        if(StringUtils.isBlank(password)){
+        if (StringUtils.isBlank(password)) {
             result.setCode(ERROR);
             result.setMsg("密码不能为空");
             return result;
         }
         User user = userMapper.selectByName(username);
-        if(user==null){
+        if (user == null) {
             result.setCode(ERROR);
             result.setMsg("用户名不存在");
             return result;
         }
 
         // 验证密码
-        password = Util.getMd5(password+PASSWORD_APPEND);
-        if(!user.getPassword().equals(password)){
+        password = Util.getMd5(password + PASSWORD_APPEND);
+        if (!user.getPassword().equals(password)) {
             result.setCode(ERROR);
             result.setMsg("密码不正确");
             return result;
         }
 
         // 生成Token
-        Map<String,String> tokenMap = new HashMap<>();
-        tokenMap.put("username",user.getUsername());
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("username", user.getUsername());
         // type原本是int，这里转String
-        tokenMap.put("type",user.getType()+"");
+        tokenMap.put("type", user.getType() + "");
         String token = JwtUtil.getToken(tokenMap);
 
         result.setCode(OK);

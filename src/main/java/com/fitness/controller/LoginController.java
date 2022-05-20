@@ -12,6 +12,7 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
@@ -37,6 +38,7 @@ public class LoginController {
 
     /**
      * 用来请求验证码的API
+     *
      * @param session
      */
     @RequestMapping(path = "/api/captcha", method = RequestMethod.GET)
@@ -53,9 +55,9 @@ public class LoginController {
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             ImageIO.write(image, "png", stream);
-            base64Image = "data:image/png;base64,"+Base64Utils.encodeToString(stream.toByteArray());
+            base64Image = "data:image/png;base64," + Base64Utils.encodeToString(stream.toByteArray());
         } catch (IOException e) {
-            logger.error("响应验证码失败"+e.getMessage());
+            logger.error("响应验证码失败" + e.getMessage());
             result.setCode(ERROR);
             result.setMsg("验证码生成失败");
             return result;
@@ -68,6 +70,7 @@ public class LoginController {
 
     /**
      * 登录方法
+     *
      * @return 返回Result类的data属性类型为String，是保存了用户信息的token
      */
     @RequestMapping(path = "/api/login", method = RequestMethod.POST)
@@ -77,7 +80,7 @@ public class LoginController {
         // 取得生成的验证码
         String captcha = (String) session.getAttribute("captcha");
 
-        if(StringUtils.isBlank(captcha)||StringUtils.isBlank(code)||!captcha.equalsIgnoreCase(code)){
+        if (StringUtils.isBlank(captcha) || StringUtils.isBlank(code) || !captcha.equalsIgnoreCase(code)) {
             result.setCode(ERROR);
             result.setMsg("验证码错误");
             return result;

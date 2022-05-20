@@ -45,14 +45,14 @@
             <mvc:mapping path="/**"/>
             <!--不拦截登录-->
             <mvc:exclude-mapping path="/api/login"/>
-<!--            不拦截获取验证码-->
+            <!--            不拦截获取验证码-->
             <mvc:exclude-mapping path="/api/captcha"/>
             <!--不拦截/-->
             <mvc:exclude-mapping path="/"/>
             <bean class="com.fitness.interceptor.TokenInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-    
+
     <!--    配置thymeleaf-->
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
@@ -73,4 +73,11 @@
         <property name="templateEngine" ref="templateEngine"/>
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
+
+    <!--    感觉控制器多了，就把index的写过来
+    这里报错不用管它，thymeleaf会处理的-->
+    <mvc:view-controller path="/" view-name="index"/>
+
+    <!--    开启mvc的注解驱动-->
+    <mvc:annotation-driven/>
 </beans>
