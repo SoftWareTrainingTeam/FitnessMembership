@@ -3,9 +3,12 @@ package com.fitness.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fitness.entity.Result;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -38,11 +41,26 @@ public class JwtUtil {
   }
 
   /**
-   * 验证并获取token中payload
+   * 获取token中payload
+   * 不用验证，只需要取信息就可以了
    * @param token
    * @return
    */
   public static DecodedJWT verify(String token) {
     return JWT.require(Algorithm.HMAC256(signature)).build().verify(token);
+  }
+
+  public static Result<Map<String,String>> getPayloadInfo(String token){
+    Result<Map<String,String>> result = new Result<>();
+    Map<String,String> map = new HashMap<>();
+    DecodedJWT decodedJWT = JWT.decode(token);
+
+    map.put("username",decodedJWT.getClaim("username").asString());
+    map.put("type",decodedJWT.getClaim("type").asString());
+    result.setData(map);
+
+    result.setCode(Result.OK);
+    result.setMsg("用户验证成功");
+    return result;
   }
 }
