@@ -1,29 +1,16 @@
-import { Alert, Divider, message } from 'antd';
-import React, { useState } from 'react';
+import { Divider, notification } from 'antd';
+import React, { useLayoutEffect, useState } from 'react';
 import { ProFormText, LoginForm, ProFormCaptcha } from '@ant-design/pro-form';
 import { history, useModel } from 'umi';
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
 import { UserOutlined, LockOutlined, SafetyOutlined } from '@ant-design/icons';
+import { getCaptcha, login } from '@/services/user';
+import type { LoginParams } from '@/services/typings';
 import styles from './index.less';
 
-const LoginMessage: React.FC<{
-  content: string;
-}> = ({ content }) => (
-  <Alert
-    style={{
-      marginBottom: 24,
-    }}
-    message={content}
-    type="error"
-    showIcon
-  />
-);
-
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  const [cpatchaUrl, setCaptchaUrl] = useState('')
   const { initialState, setInitialState } = useModel('@@initialState');
-
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
     if (userInfo) {
@@ -33,13 +20,27 @@ const Login: React.FC = () => {
       }));
     }
   };
-
-  const handleSubmit = async (values: API.LoginParams) => {
+  // 刷新验证码
+  const refreshCaptcha = async () => {
+    try {
+      const { code, data } = await getCaptcha()
+      if (code === 200) {
+        setCaptchaUrl(data)
+      } else {
+        throw '验证码获取失败!'
+      }
+    } catch (err) {
+      notification.error({ message: '验证码获取失败!', duration: 2 })
+    }
+  }
+  // 登录
+  const handleSubmit = async (values: LoginParams) => {
     try {
       // 登录
-      const msg = await login({ ...values });
-      if (msg.status === 'ok') {
-        message.success('登录成功!');
+      const res = await login({ ...values })
+      if (res.code === 200) {
+        notification.success({ message: '登录成功!', duration: 2 })
+        localStorage.setItem('PASSPORT_TOKEN', res.data)
         await fetchUserInfo();
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
@@ -47,16 +48,16 @@ const Login: React.FC = () => {
         const { redirect } = query as { redirect: string };
         history.push(redirect || '/');
         return;
+      } else {
+        notification.error({ message: res.msg, duration: 2 })
       }
-      console.log(msg);
-      // 如果失败去设置用户错误信息
-      setUserLoginState(msg);
     } catch (error) {
-      message.error('登录失败!请重试');
+      notification.error({ message: '登录失败!请重试', duration: 2 })
     }
   };
-  const { status, type: loginType } = userLoginState;
-
+  useLayoutEffect(() => {
+    refreshCaptcha()
+  }, [])
   return (
     <div className={styles.container}>
       <div className={styles.formwrapper}>
@@ -65,18 +66,10 @@ const Login: React.FC = () => {
             logo={<img alt="logo" src="/logo.svg" />}
             title="健身会员管理系统"
             subTitle={<Divider />}
-            // initialValues={{
-            //   autoLogin: true,
-            // }}
             onFinish={async (values) => {
-              await handleSubmit(values as API.LoginParams);
+              await handleSubmit(values as LoginParams);
             }}
           >
-            {status === 'error' && loginType === 'account' && (
-              <LoginMessage
-                content="账号或者密码错误!"
-              />
-            )}
             <>
               <ProFormText
                 name="username"
@@ -107,9 +100,13 @@ const Login: React.FC = () => {
                 ]}
               />
               <ProFormCaptcha
+                // name="captcha"
+                name="code"
+                countDown={2}
+                placeholder="请输入验证码"
                 fieldProps={{
                   size: 'large',
-                  prefix: <SafetyOutlined className={styles.prefixIcon}/>,
+                  prefix: <SafetyOutlined className={styles.prefixIcon} />,
                 }}
                 captchaProps={{
                   size: 'large',
@@ -117,17 +114,15 @@ const Login: React.FC = () => {
                     padding: 0
                   }
                 }}
-                placeholder="请输入验证码"
                 captchaTextRender={() => {
                   return (
                     <img
                       width="100%"
-                      src="https://oschina.net/action/user/captcha"
-                      alt="图形验证码"
+                      src={cpatchaUrl}
+                      alt="点击重试"
                     />
                   )
                 }}
-                name="captcha"
                 rules={[
                   {
                     required: true,
@@ -135,29 +130,10 @@ const Login: React.FC = () => {
                   },
                 ]}
                 onGetCaptcha={async () => {
-                  // const result = await getFakeCaptcha({
-                  //   phone,
-                  // });
-                  // if (result === false) {
-                  //   return;
-                  // }
-                  message.success('获取验证码成功！验证码为：1234');
+                  await refreshCaptcha()
                 }}
               />
             </>
-            {/* <div
-            style={{
-              marginBottom: 24,
-            }}
-          >
-            <a
-              style={{
-                float: 'right',
-              }}
-            >
-              忘记密码?
-            </a>
-          </div> */}
           </LoginForm>
         </div>
       </div>
