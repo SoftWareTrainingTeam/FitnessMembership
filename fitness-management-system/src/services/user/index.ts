@@ -1,21 +1,37 @@
 import request from "@/utils/request";
-import type { LoginParams, ResponseResult } from "../typings";
+import type { CurrentUser, LoginParams, ResponseResult } from "../typings";
 
+/**
+ * 
+ * @param params 
+ * @returns 
+ */
 export function login(params: LoginParams) {
-  return request<ResponseResult<string>>(
-    '/api/login',
-    {
+  return request<
+  ResponseResult<string>
+  >('/api/login',{
       method: 'POST',
-      data: params
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: params,
     }
   )
 }
 
 export function getCaptcha() {
-  return request<ResponseResult<string>>(
-    '/api/captcha',
-    {
+  return request<
+  ResponseResult<string>
+  >('/api/captcha',{
       method: 'GET'
     }
   )
+}
+
+export function getCurrentUser() {
+  return request<
+  ResponseResult<CurrentUser>
+  >('/api/currentUser', {
+    method: 'GET',
+  });
 }

@@ -31,7 +31,6 @@ const errorHandler = (error: { response: Response }): Response => {
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
-
     notification.error({
       message: `请求出错 ${status}: ${url}`,
       description: errorText,
@@ -43,6 +42,9 @@ const errorHandler = (error: { response: Response }): Response => {
   }
   return response;
 };
+/**
+ * restful接口风格参数处理
+ */
 
 /**
  * 配置request请求时的默认参数
@@ -54,11 +56,18 @@ const request = extend({
   timeout: 20 * 1000,
 });
 request.interceptors.request.use((url, options) => {
+  // restful风格接口参数处理
+  if (options.restful) {
+    const keys = Object.keys(options.restful)
+    keys.forEach(key => {
+      url += `/${options.restful[key]}`
+    })
+  }
   // 自动携带token
   const token = localStorage.getItem('PASSPORT_TOKEN') || ''
   const headers = token 
-  ? options.headers 
-  : {...options.headers,'Authorization': token}
+  ? {...options.headers,'Authorization': token}
+  : options.headers  
   return (
     {
       url,

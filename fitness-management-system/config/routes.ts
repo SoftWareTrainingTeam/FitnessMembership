@@ -16,6 +16,11 @@
   {
     path: '/op',
     // layout: false,
+    component: '../layouts/AdminLayout',
+    access: "['canAdmin', 'canUser']",
+    wrappers: [
+      '@/wrappers/auth',
+    ],
     routes: [
       {
         path: '/op',
@@ -75,7 +80,7 @@
           },
           {
             path: './members',
-            component: './Test'
+            component: './management/VipMember',
           },
           {
             path: './coaches',
@@ -108,40 +113,6 @@
       }
     ]
   },
-  // {
-  //   path: '/Test',
-  //   name: 'Test',
-  //   icon: 'smile',
-  //   component: './Test',
-  // },
-  // {
-  //   path: '/admin',
-  //   name: 'admin',
-  //   icon: 'crown',
-  //   access: 'canAdmin',
-  //   component: './Admin',
-  //   routes: [
-  //     {
-  //       path: '/admin/sub-page',
-  //       name: 'sub-page',
-  //       icon: 'smile',
-  //       component: './Test',
-  //     },
-  //     {
-  //       component: './404',
-  //     },
-  //   ],
-  // },
-  // {
-  //   name: 'list.table-list',
-  //   icon: 'table',
-  //   path: '/list',
-  //   component: './TableList',
-  // },
-  // {
-  //   path: '/',
-  //   redirect: '/Test',
-  // },
   {
     path: '/',
     redirect: '/op'
