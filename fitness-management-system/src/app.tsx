@@ -42,7 +42,6 @@ export async function getInitialState(): Promise<{
     history.push(redirect || '/');
   }
   return {
-    fetchUserInfo,
     currentUser: currentUser ?? undefined,
     settings: defaultSettings,
   };
