@@ -4,7 +4,6 @@ import defaultSettings from '../config/defaultSettings';
 import { getCurrentUser } from './services/user';
 import { CurrentUser } from './services/typings';
 import { history } from 'umi';
-
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
   loading: <PageLoading />,
@@ -20,12 +19,20 @@ export async function getInitialState(): Promise<{
   fetchUserInfo?: () => Promise<CurrentUser | undefined>;
 }> {
   try {
-    const {code, data} = await getCurrentUser();
+    const { code, data } = await getCurrentUser();
     if (code === 200 && data) {
-        return {
-          currentUser: data,
-          settings: defaultSettings
-        };
+      const { pathname } = history.location;
+      if (pathname.indexOf('/user/login') > -1) {
+        const { query } = history.location;
+        const { redirect } = query as { redirect: string };
+        history.replace({
+          pathname: redirect || '/'
+        })
+      }
+      return {
+        currentUser: data,
+        settings: defaultSettings
+      };
     }
     localStorage.removeItem('PASSPORT_TOKEN')
     throw '未登录！'

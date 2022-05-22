@@ -1,40 +1,37 @@
 import request from "@/utils/request";
-import type { ResponseResult, Vip } from "../typings";
-
-export function getVipList(param: {startPage?: number, pageSize?: number, keyword?: string}) {
+import type { ResponseResult, Coach } from "../typings";
+export function getCoachList(param: {startPage?: number, pageSize?: number, keyword?: string}) {
   return request<
     ResponseResult<{
-      list: Vip[],
+      list: Coach[],
       total: number,
     }>
-  >('/api/member', {
+  >('/api/coach', {
     method: 'GET',
     restful: param
   })
 }
-
-export function addVip(body: Omit<Vip, 'memberId'>) {
+export function addCoach(body: Omit<Coach, 'coachId'>) {
   return request<
     ResponseResult<string>
-  >('/api/member', {
+  >('/api/coach', {
     method: 'POST',
     data: body
   })
 }
 
-export function updateVip(body: Vip) {
+export function updateCoach(body: Coach) {
   return request<
     ResponseResult<string>
-  >('/api/member', {
+  >('/api/coach', {
     method: 'PUT',
     data: body
   })
 }
-
-export function deleteVip(id: string) {
+export function deleteCoach(id: string) {
   return request<
     ResponseResult
-  >('/api/member', {
+  >('/api/coach', {
     method: 'DELETE',
     restful: {
       id

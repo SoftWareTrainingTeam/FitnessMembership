@@ -43,3 +43,14 @@ export type Vip = {
   telNumber: string,
   registTime: number
 }
+
+export type Coach = {
+  coachId: string,
+  coachName: string,
+  coachSex: string,
+  coachBirth:  string | Moment,
+  coachTel: string,
+  entryTime: string,
+  coachType: '1' | '2' | '3',
+  coachLevel: '1' | '2' | '3'
+}
