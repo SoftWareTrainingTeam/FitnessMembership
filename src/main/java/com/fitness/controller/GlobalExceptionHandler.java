@@ -40,4 +40,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   public Result handlePageNumberException(PageNumberException e) {
     return new Result(Result.ERROR, e.getMessage());
   }
+
+  @ExceptionHandler(Exception.class)
+  public Result handleGlobalException(Exception e) {
+    return new Result(Result.ERROR, "出现错误，请联系管理员~");
+  }
 }
