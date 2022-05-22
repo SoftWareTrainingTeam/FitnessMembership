@@ -48,4 +48,13 @@ public interface MemberService {
    * @return 会员信息
    */
   Result getMembersById(String id);
+
+  /**
+   * 分页模糊查询
+   * @param startPage 起使页
+   * @param pageSize 页码大小
+   * @param keyword 关键字
+   * @return 会员信息
+   */
+  Result getMembersByKeyword(Integer startPage, Integer pageSize, String keyword);
 }

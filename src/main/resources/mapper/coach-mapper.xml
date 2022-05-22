@@ -30,12 +30,12 @@
     <!--3. 模糊查询教练信息-->
     <select id="getCoachByVague" resultType="com.fitness.entity.Coach">
         <include refid="baseQuery"/>
-        where coach_id like concat('%', #{keywords}, '%') or
+        where
         coach_name like concat('%', #{keywords}, '%') or
         coach_sex like concat('%', #{keywords}, '%') or
         coach_tel like concat('%', #{keywords}, '%') or
         coach_type like concat('%', #{keywords}, '%') or
-        coach_levl like concat('%', #{keywords}, '%')
+        coach_level like concat('%', #{keywords}, '%')
     </select>
 
     <!--4. 查询所有教练数量-->
@@ -60,7 +60,7 @@
     <update id="updateCoach">
         update coach set coach_name = #{coachName}, coach_sex = #{coachSex},
                          coach_birth = #{coachBirth}, coach_type = #{coachType},
-                         coach_levle = #{coachLevel}
+                         coach_level = #{coachLevel}
         where coach_id = #{coachId}
     </update>
 </mapper>

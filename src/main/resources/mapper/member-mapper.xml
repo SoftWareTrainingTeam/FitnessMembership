@@ -22,13 +22,11 @@
     </select>
 
     <!--3. 模糊查询-->
-    <select id="getPartMemberByPage" resultType="com.fitness.entity.Member">
+    <select id="getMembersByVague" resultType="com.fitness.entity.Member">
         <include refid="baseQuery"/>
         where
-        member_id like concat('%', #{info}, '%') or
         name like concat('%', #{info}, '%') or
         tel_number like concat('%', #{info}, '%') or
-        regist_time like concat('%', #{info}, '%') or
         address like concat('%', #{info}, '%')
     </select>
 

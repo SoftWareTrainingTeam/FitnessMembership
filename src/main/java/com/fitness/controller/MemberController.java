@@ -25,9 +25,18 @@ public class MemberController {
   }
 
   //分页获取会员信息
-  @GetMapping("/api/member")
-  public Result getMembersByPage(Integer startPage, Integer pageSize) {
+  @GetMapping("/api/member/{startPage}/{pageSize}")
+  public Result getMembersByPage(@PathVariable("startPage") Integer startPage,
+                                 @PathVariable("pageSize") Integer pageSize) {
     return memberService.getMembersByPage(startPage, pageSize);
+  }
+
+  //模糊分页查询会员信息
+  @GetMapping("/api/member/{startPage}/{pageSize}/{keyword}")
+  public Result getMemberByKeyword(@PathVariable("startPage") Integer startPage,
+                                   @PathVariable("pageSize") Integer pageSize,
+                                   @PathVariable("keyword") String keyword) {
+    return memberService.getMembersByKeyword(startPage, pageSize, keyword);
   }
 
   //单个会员信息

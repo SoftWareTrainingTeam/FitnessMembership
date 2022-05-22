@@ -65,4 +65,20 @@ public class MemberServiceImpl implements MemberService {
     Member member = memberMapper.getMemberById(id);
     return new Result<Member>(Result.OK, "请求成功~", member);
   }
+
+  @Override
+  public Result getMembersByKeyword(Integer startPage, Integer pageSize, String keyword) {
+    if (startPage < 1) {
+      throw new PageNumberException("起使页码无效~");
+    }
+    Page<Member> page = PageHelper.startPage(startPage, pageSize);
+    List<Member> members = memberMapper.getMembersByVague(keyword);
+    PageInfo<Member> pageInfo = new PageInfo<>(members);
+    Result<PageInfo<Member>> result = new Result<>(Result.OK, "查询成功~", pageInfo);
+    return result;
+  }
+
+
+
+
 }
