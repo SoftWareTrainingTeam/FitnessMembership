@@ -5,7 +5,7 @@ import { Button, Modal, message } from 'antd'
 import type { Vip } from '@/services/typings'
 import dayjs from '@/utils/dayjs'
 import { PlusOutlined } from '@ant-design/icons'
-import EditForm from '@/components/EditForm'
+import EditForm from './EditForm'
 const VipMember: React.FC = () => {
   const [visible, setVisible] = useState(false)
   const [type, setType] = useState<0 | 1>(0)   //0添加， 1修改
@@ -25,23 +25,19 @@ const VipMember: React.FC = () => {
       }, {
         title: '性别',
         key: 'sex',
-        search: false,
         dataIndex: 'sex',
       }, {
         title: '住址',
         key: 'address',
         dataIndex: 'address',
-        search: false,
       }, {
         title: '联系电话',
         key: 'telNumber',
         dataIndex: 'telNumber',
-        search: false
       }, {
         title: '注册时间',
         key: 'registTime',
         dataIndex: 'registTime',
-        search: false,
         render: (_, vip: Vip) => {
           return dayjs(vip.registTime).format('YYYY-MM-DD HH:ss')
         }
@@ -50,7 +46,6 @@ const VipMember: React.FC = () => {
         key: 'memberId',
         width: '20%',
         align: 'center',
-        search: false,
         render: (_, vip: Vip) => {
           return [
             <Button
@@ -58,8 +53,8 @@ const VipMember: React.FC = () => {
               type="link"
               onClick={() => {
                 setType(1)
+                setDefaultValues({...vip})
                 setVisible(true)
-                setDefaultValues(vip)
               }}
             >
               编辑
@@ -104,7 +99,7 @@ const VipMember: React.FC = () => {
     })
   }
   return (
-    <div>
+    <>
       <ProTable<Vip>
         rowKey="memberId"
         cardBordered
@@ -112,12 +107,22 @@ const VipMember: React.FC = () => {
         headerTitle={<h2>会员管理</h2>}
         actionRef={actionRef}
         columns={columns}
+        search={false}
+        options={{
+          search: {
+            allowClear: true,
+            style: {width: 300},
+            placeholder: '支持姓名，电话号码模糊查询',
+            enterButton: <Button type="primary">查询</Button>
+          },
+          fullScreen: true
+        }}
         request={async (param) => {
           // 表单搜索项会从 params 传入，传递给后端接口。
           const {
             code,
             data: { list, total }
-          } = await getVipList(param.current, param.pageSize)
+          } = await getVipList(param)
           return {
             data: list,
             total,
@@ -131,10 +136,6 @@ const VipMember: React.FC = () => {
             return `总共${total}条`
           },
         }}
-        search={{
-          // filterType: "light",
-          labelWidth: 'auto',
-        }}
         toolBarRender={() => [
           <Button
             key="button"
@@ -142,6 +143,7 @@ const VipMember: React.FC = () => {
             type="primary"
             onClick={() => {
               setType(0)
+              setDefaultValues(null)
               setVisible(true)
             }}
           >
@@ -156,7 +158,7 @@ const VipMember: React.FC = () => {
         setVisible={setVisible}
         defaultValues={defaultValues}
       />
-    </div>
+    </>
   )
 }
 

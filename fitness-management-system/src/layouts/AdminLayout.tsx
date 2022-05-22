@@ -47,12 +47,26 @@ const AdminLayout: React.FC<BasicLayoutProps> = (props) => {
           if (menuItemProps.isUrl || !menuItemProps.path) {
             return defaultDom;
           }
-          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+          return <Link to={menuItemProps.path}>
+            <>
+              {
+                menuItemProps.pro_layout_parentKeys &&
+                menuItemProps.pro_layout_parentKeys.length > 0 &&
+                menuItemProps.icon
+              }
+              {
+                defaultDom
+              }
+            </>
+          </Link>;
         }}
         footerRender={false}
         rightContentRender={() => <RightContent />}
       >
-        <Access accessible={access.canAdmin || access.canUser} fallback={<div>无权限</div>}>
+        <Access
+          accessible={access.canAdmin || access.canUser}
+          fallback={<div>无权限</div>}
+        >
           {children}
         </Access>
       </ProLayout>

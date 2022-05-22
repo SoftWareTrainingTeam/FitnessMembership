@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import {
-  Button,
-  Cascader,
   DatePicker,
   Form,
   Input,
@@ -11,16 +9,15 @@ import {
 } from 'antd'
 import moment from 'moment';
 import 'moment/locale/zh-cn';
-import cityList from '@/constant/cityList';
-import { addVip, updateVip } from '@/services/vip';
 import { ActionType } from '@ant-design/pro-table';
-import { Vip } from '@/services/typings';
+import { Coach } from '@/services/typings';
+import { addCoach, updateCoach } from '@/services/coach';
 moment.locale('zh-cn');
 
 type IProps = {
   type: 0 | 1,
   visible: boolean,
-  defaultValues: Vip | null
+  defaultValues: Coach | null
   actionRef: React.MutableRefObject<ActionType | undefined>,
   setVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -35,15 +32,22 @@ const EditForm: React.FC<IProps> = (
   }
 ) => {
   const [form] = Form.useForm()
+
+  // 表单提交
   const handleSubmit = async (values: any) => {
     try {
-      values.birthday = moment(values.birthday).format('X')
-      values.address = (values.address as string[]).join('-')
+      values.coachBirth = moment(values.coachBirth).format('X')
+      // values.coachType = values.coachType * 1
+      // values.coachLevel = values.coachLevel * 1
       let res
       if (type) {
-        res = await updateVip({...values, registTime: Date.now()})
+        res = await updateCoach({
+          ...values,
+          coachId: defaultValues?.coachId,
+          entryTime: Date.now()
+        })
       } else {
-        res = await addVip({ ...values, registTime: Date.now() })
+        res = await addCoach({ ...values, entryTime: Date.now() })
       }
       if (res.code === 200) {
         message.success(res.msg)
@@ -56,23 +60,29 @@ const EditForm: React.FC<IProps> = (
       message.error('操作失败!请重试')
     }
   }
+  // 设置表单初始值
   useEffect(() => {
     if (defaultValues) {
-      defaultValues.birthday = moment(defaultValues.birthday)
-      defaultValues.address = (defaultValues.address as string).split('-')
+      defaultValues.coachBirth = moment(defaultValues.coachBirth)
       form.setFieldsValue(defaultValues)
+    } else {
+      form.resetFields()
     }
   }, [defaultValues])
   return (
     <Modal
+      getContainer={false}
       visible={visible}
-      title={type ? '编辑会员信息' : '注册会员'}
+      title={type ? '编辑教练信息' : '添加教练'}
       maskClosable={false}
-      destroyOnClose
       onCancel={() => setVisible(false)}
+      okText={type ? '确认修改' : '确认添加'}
+      okButtonProps={{
+        htmlType: 'submit',
+        form: 'register'
+      }}
     >
       <Form
-        // {...formItemLayout}
         form={form}
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 20 }}
@@ -82,7 +92,7 @@ const EditForm: React.FC<IProps> = (
       >
         {/* 姓名 */}
         <Form.Item
-          name="name"
+          name="coachName"
           label="姓名"
           rules={[
             {
@@ -95,9 +105,9 @@ const EditForm: React.FC<IProps> = (
         </Form.Item>
         {/* 性别 */}
         <Form.Item
-          name="sex"
+          name="coachSex"
           label="性别"
-          rules={[{ required: true, message: '请选择您的性别!' }]}
+          rules={[{ required: true, message: '请选择性别!' }]}
         >
           <Select placeholder="请选择性别">
             <Select.Option value="男">男</Select.Option>
@@ -105,23 +115,9 @@ const EditForm: React.FC<IProps> = (
             <Select.Option value="其他">其他</Select.Option>
           </Select>
         </Form.Item>
-        {/* 住址 */}
-        <Form.Item
-          name="address"
-          label="住址"
-          rules={[
-            {
-              required: true,
-              message: '请输入住址!'
-            },
-          ]}
-        >
-          <Cascader options={cityList} placeholder="请输入住址" />
-        </Form.Item>
         {/* 出生日期 */}
-
         <Form.Item
-          name="birthday"
+          name="coachBirth"
           label="出生日期"
           rules={[{ required: true, message: '请选择出生日期!' }]}
         >
@@ -129,12 +125,12 @@ const EditForm: React.FC<IProps> = (
         </Form.Item>
         {/* 联系电话 */}
         <Form.Item
-          name="telNumber"
+          name="coachTel"
           label="联系电话"
           rules={[
             {
               required: true,
-              message: '请输入您的联系电话!'
+              message: '请输入联系电话!'
             },
             {
               pattern: /^1[34578]\d{9}$/,
@@ -144,12 +140,29 @@ const EditForm: React.FC<IProps> = (
         >
           <Input placeholder="请输入联系电话" />
         </Form.Item>
+        {/* 教练类型 */}
         <Form.Item
-          wrapperCol={{ offset: 4 }}
+          name="coachType"
+          label="教练类型"
+          rules={[{ required: true, message: '请选择类型!' }]}
         >
-          <Button type="primary" htmlType="submit">
-            {type ? '确认修改' : '确认注册'}
-          </Button>
+          <Select placeholder="请选择类型">
+            <Select.Option value="1">巡场</Select.Option>
+            <Select.Option value="2">团操</Select.Option>
+            <Select.Option value="3">私人</Select.Option>
+          </Select>
+        </Form.Item>
+        {/* 教练等级 */}
+        <Form.Item
+          name="coachLevel"
+          label="教练等级"
+          rules={[{ required: true, message: '请选择教练等级!' }]}
+        >
+          <Select placeholder="请选择教练等级">
+            <Select.Option value="1">初级</Select.Option>
+            <Select.Option value="2">中级</Select.Option>
+            <Select.Option value="3">高级</Select.Option>
+          </Select>
         </Form.Item>
       </Form>
     </Modal>
