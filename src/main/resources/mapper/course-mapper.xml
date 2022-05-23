@@ -33,16 +33,38 @@
             <result property="price" column="price"></result>
         </association>
     </resultMap>
-    
+
     <!--基础查询信息-->
     <sql id="baseQuery">
-        select member.member_id as member_id, name, sex, birthday, tel_number, regist_time, address,
-               coach.coach_id as coach_id, coach_name, coach_sex, coach_birth, coach_tel, entry_time, coach_type,
+        select member.member_id      as member_id,
+               name,
+               sex,
+               birthday,
+               tel_number,
+               regist_time,
+               address,
+               coach.coach_id        as coach_id,
+               coach_name,
+               coach_sex,
+               coach_birth,
+               coach_tel,
+               entry_time,
+               coach_type,
                coach_level,
-               course_info.course_id as course_id, course_name, description, start_time, frequency, price
-        from course, member, coach, course_info
-        where course.member_id = member.member_id and course.coach_id
-            = coach.coach_id and course.course_id = course_info.course_id
+               course_info.course_id as course_id,
+               course_name,
+               description,
+               start_time,
+               frequency,
+               price
+        from course,
+             member,
+             coach,
+             course_info
+        where course.member_id = member.member_id
+          and course.coach_id
+            = coach.coach_id
+          and course.course_id = course_info.course_id
     </sql>
 
     <!--1. 获取所有选课信息 会员-教练-课程信息-->
@@ -52,22 +74,26 @@
 
     <!--2. 根据会员id获取该会员的选课信息-->
     <select id="getCourseByMemberId" resultMap="baseMap">
-        <include refid="baseQuery"/> and course.member_id = #{memberId}
+        <include refid="baseQuery"/>
+        and course.member_id = #{memberId}
     </select>
 
     <!--3. 根据会员名字获取会员的选课信息-->
     <select id="getCourseByMemberName" resultMap="baseMap">
-        <include refid="baseQuery"/> and name = #{memberName}
+        <include refid="baseQuery"/>
+        and name = #{memberName}
     </select>
 
     <!--4. 根据教练id获取教练所教课程信息-->
     <select id="getCourseByCoachId" resultMap="baseMap">
-        <include refid="baseQuery"/> and  course.coach_id = #{coachId}
+        <include refid="baseQuery"/>
+        and course.coach_id = #{coachId}
     </select>
 
     <!--5. 根据教练名字获取教练所教授课程-->
     <select id="getCourseByCoachName" resultMap="baseMap">
-        <include refid="baseQuery"/> and coach_name = #{coachName}
+        <include refid="baseQuery"/>
+        and coach_name = #{coachName}
     </select>
 
     <!--6. 新增课选-->
@@ -78,26 +104,48 @@
 
     <!--7. 更新课选-->
     <update id="updateCourse">
-        update course set coach_id = #{coach.coachId}, course_id = #{courseInfo.courseId}
+        update course
+        set coach_id  = #{coach.coachId},
+            course_id = #{courseInfo.courseId}
         where member_id = #{member.memberId}
+    </update>
 
     <!--8. 删除课选-->
     <delete id="deleteCourse">
-        delete from course where member_id = #{memberId}
+        delete
+        from course
+        where member_id = #{memberId}
     </delete>
 
     <!--9. 根据会员id获取所选课程信息-->
     <select id="getMemberCourseNumber" resultType="java.lang.Integer">
-        select count(*) from course where member_id = #{memberId}
+        select count(*)
+        from course
+        where member_id = #{memberId}
     </select>
 
     <!--10. 根据教练id获取所教授课程-->
     <select id="getCoachCourseNumber" resultType="java.lang.Integer">
-        select count(*) from course where coach_id = #{coachId}
+        select count(*)
+        from course
+        where coach_id = #{coachId}
     </select>
 
     <!--11. 根据课程信息id获取该课程被选数量-->
     <select id="getCourseInfoNumber" resultType="java.lang.Integer">
-        select count(*) from course where course_id = #{courseId}
+        select count(*)
+        from course
+        where course_id = #{courseId}
+    </select>
+
+    <!--12. 模糊查询-->
+    <select id="getCourseByVague" resultMap="baseMap">
+        <include refid="baseQuery"/>
+        and (
+        course.member_id like concat('%', #{keyword}, '%') or
+        name like concat('%', #{keyword}, '%') or
+        course.coach_id like concat('%', #{keyword}, '%') or
+        coach_name like concat('%', #{keyword}, '%')
+        )
     </select>
 </mapper>

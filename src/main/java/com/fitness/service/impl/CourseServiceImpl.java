@@ -66,6 +66,16 @@ public class CourseServiceImpl implements CourseService {
   }
 
   @Override
+  public Result<PageInfo<Course>> getCourseByVague(Integer startPage, Integer pageSize, String keyword) {
+    if(startPage < 1)
+      throw new PageNumberException("起使页码无效~");
+    Page<Course> pageHelper = PageHelper.startPage(startPage, pageSize);
+    List<Course> allCourse = courseMapper.getCourseByVague(keyword);
+    PageInfo<Course> pageInfo = new PageInfo<>(allCourse);
+    return new Result<PageInfo<Course>>(Result.OK, "获取成功~", pageInfo);
+  }
+
+  @Override
   public Result<PageInfo<Course>> getCourseByCoachId(Integer startPage, Integer pageSize, String coachId) {
     if(startPage < 1)
       throw new PageNumberException("起使页码无效~");

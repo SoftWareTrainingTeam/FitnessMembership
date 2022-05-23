@@ -27,12 +27,6 @@ public class CourseController {
     this.courseService = courseService;
   }
 
-  // 获取所有课选信息
-  @GetMapping("/course")
-  public Result<List<Course>> getAllCourse() {
-    return courseService.getAllCourse();
-  }
-
   // 分页获取所有课选信息
   @GetMapping("/course/{startPage}/{pageSize}")
   public Result<PageInfo<Course>> getAllCourseByPage(@PathVariable("startPage") Integer startPage,
@@ -40,36 +34,12 @@ public class CourseController {
     return courseService.getAllCourseByPage(startPage, pageSize);
   }
 
-  // 根据会员id获取课选信息
-  @GetMapping("/course/{startPage}/{pageSize}/member/id/{memberId}")
-  public Result<PageInfo<Course>> getCourseByMemberId(@PathVariable("startPage") Integer startPage,
-                                                      @PathVariable("pageSize") Integer pageSize,
-                                                      @PathVariable("memberId") String memberId) {
-    return courseService.getCourseByMemberId(startPage, pageSize, memberId);
-  }
-
-  // 根据会员名称分页获取选课
-  @GetMapping("/course/{startPage}/{pageSize}/member/name/{memberName}")
-  public Result<PageInfo<Course>> getCourseByMemberName(@PathVariable("startPage") Integer startPage,
-                                                      @PathVariable("pageSize") Integer pageSize,
-                                                      @PathVariable("memberName") String memberName) {
-    return courseService.getCourseByMemberName(startPage, pageSize, memberName);
-  }
-
-  // 根据教练id分页获取教练所教课程
-  @GetMapping("/course/{startPage}/{pageSize}/coach/id/{coachId}")
-  public Result<PageInfo<Course>> getCourseByCoachId(@PathVariable("startPage") Integer startPage,
-                                                        @PathVariable("pageSize") Integer pageSize,
-                                                        @PathVariable("coachId") String coachId) {
-    return courseService.getCourseByCoachId(startPage, pageSize, coachId);
-  }
-
-  // 根据会员名称分页获取选课
-  @GetMapping("/course/{startPage}/{pageSize}/coach/name/{coachName}")
-  public Result<PageInfo<Course>> getCourseByCoachName(@PathVariable("startPage") Integer startPage,
-                                                        @PathVariable("pageSize") Integer pageSize,
-                                                        @PathVariable("coachName") String coachName) {
-    return courseService.getCourseByCoachName(startPage, pageSize, coachName);
+  // 根据会员id或者name或者教练id或者name模糊查询
+  @GetMapping("/course/{startPage}/{pageSize}/{keyword}")
+  public Result<PageInfo<Course>> getCourseByVague(@PathVariable("startPage") Integer startPage,
+                                                   @PathVariable("pageSize") Integer pageSize,
+                                                   @PathVariable("keyword") String keyword) {
+    return courseService.getCourseByVague(startPage, pageSize, keyword);
   }
 
   // 新增课选

@@ -87,4 +87,11 @@ public interface CourseMapper {
    * @return 被选数量
    */
   Integer getCourseInfoNumber(String courseId);
+
+  /**
+   * 模糊查询
+   * @param keyword 关键字
+   * @return 备选集合
+   */
+  List<Course> getCourseByVague(String keyword);
 }

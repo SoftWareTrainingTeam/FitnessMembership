@@ -83,4 +83,13 @@ public interface CourseService {
    * @return 通用返回
    */
   Result deleteCourse(String memberId);
+
+  /**
+   * 模糊查询
+   * @param startPage 起始页码
+   * @param pageSize 页面容量
+   * @param keyword 关键字
+   * @return 数据集合
+   */
+  Result<PageInfo<Course>> getCourseByVague(Integer startPage, Integer pageSize, String keyword);
 }
