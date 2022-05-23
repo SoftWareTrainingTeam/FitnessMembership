@@ -1,5 +1,6 @@
 package com.fitness.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -10,8 +11,18 @@ public class Equipment {
     int equipId;
     int type;
     String label;
-    Date purchaseDate;
+    Timestamp purchaseDate;
     int available;
+
+    EquipType equipType;
+
+    public EquipType getEquipType() {
+        return equipType;
+    }
+
+    public void setEquipType(EquipType equipType) {
+        this.equipType = equipType;
+    }
 
     public int getEquipId() {
         return equipId;
@@ -37,11 +48,11 @@ public class Equipment {
         this.label = label;
     }
 
-    public Date getPurchaseDate() {
+    public Timestamp getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(Date purchaseDate) {
+    public void setPurchaseDate(Timestamp purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 

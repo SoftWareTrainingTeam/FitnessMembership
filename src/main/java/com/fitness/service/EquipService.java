@@ -10,8 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import static com.fitness.entity.Result.OK;
@@ -33,7 +32,7 @@ public class EquipService {
     @Transactional
     public Result<PageInfo<Equipment>> showEquips(int offset, int limit) {
         if (offset < 1) {
-            throw new PageNumberException("起使页码无效~");
+            throw new PageNumberException("起使页码无效");
         }
         Result<PageInfo<Equipment>> result = new Result<>();
         PageHelper.startPage(offset, limit);
@@ -41,6 +40,21 @@ public class EquipService {
         PageInfo<Equipment> pageInfo = new PageInfo<>(equipmentList);
         result.setCode(OK);
         result.setMsg("器材列表查询成功");
+        result.setData(pageInfo);
+        return result;
+    }
+
+    @Transactional
+    public Result<PageInfo<Equipment>> AllEquipsInfo(int offset, int limit) {
+        if (offset < 1) {
+            throw new PageNumberException("起使页码无效");
+        }
+        Result<PageInfo<Equipment>> result = new Result<>();
+        PageHelper.startPage(offset, limit);
+        List<Equipment> equipmentList = equipmentMapper.selectAll(offset, limit);
+        PageInfo<Equipment> pageInfo = new PageInfo<>(equipmentList);
+        result.setCode(OK);
+        result.setMsg("器材列表(附器材信息)查询成功");
         result.setData(pageInfo);
         return result;
     }
@@ -77,7 +91,7 @@ public class EquipService {
         }
         if (equipment.getPurchaseDate() == null) {
             // 给个默认时间，就是当前时间
-            equipment.setPurchaseDate(new Date());
+            equipment.setPurchaseDate(new Timestamp(System.currentTimeMillis()));
         }
         if (equipment.getAvailable() != 0 && equipment.getAvailable() != 1 && equipment.getAvailable() != 2) {
             // 0不可用1可用2检修/维护
@@ -105,7 +119,7 @@ public class EquipService {
         Result<?> result = new Result<>();
         equipmentMapper.deleteEquip(id);
         result.setCode(OK);
-        result.setMsg("成功修改器材信息");
+        result.setMsg("删除器材成功");
         return result;
     }
 }

@@ -17,6 +17,8 @@ public interface EquipmentMapper {
      */
     List<Equipment> selectAllEquip(int offset, int limit);
 
+    List<Equipment> selectAll(int offset,int limit);
+
     /**
      * 增加健身器材
      *

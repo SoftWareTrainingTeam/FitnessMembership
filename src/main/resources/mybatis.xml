@@ -12,4 +12,9 @@
         <!--配置驼峰与"_"匹配-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
+
+    <typeAliases>
+        <typeAlias type="com.fitness.entity.Equipment" alias="Equipment"/>
+        <typeAlias type="com.fitness.entity.EquipType" alias="EquipType"/>
+    </typeAliases>
 </configuration>

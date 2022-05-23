@@ -41,24 +41,24 @@
             <mvc:mapping path="/**"/>
             <bean class="com.fitness.interceptor.CorsInterceptor"/>
         </mvc:interceptor>
-        <mvc:interceptor>
+<!--        <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <!--不拦截登录-->
+            &lt;!&ndash;不拦截登录&ndash;&gt;
             <mvc:exclude-mapping path="/api/login"/>
-            <!--不拦截获取验证码-->
+            &lt;!&ndash;不拦截获取验证码&ndash;&gt;
             <mvc:exclude-mapping path="/api/captcha"/>
-            <!--不拦截courseinfo-->
+            &lt;!&ndash;不拦截courseinfo&ndash;&gt;
             <mvc:exclude-mapping path="/api/courseinfo/**"/>
-            <!--不拦截member-->
+            &lt;!&ndash;不拦截member&ndash;&gt;
             <mvc:exclude-mapping path="/api/member/**"/>
-            <!--不拦截coach-->
+            &lt;!&ndash;不拦截coach&ndash;&gt;
             <mvc:exclude-mapping path="/api/coach/**"/>
-            <!--不拦截course-->
+            &lt;!&ndash;不拦截course&ndash;&gt;
             <mvc:exclude-mapping path="/api/course/**"/>
-            <!--不拦截/-->
+            &lt;!&ndash;不拦截/&ndash;&gt;
             <mvc:exclude-mapping path="/"/>
             <bean class="com.fitness.interceptor.TokenInterceptor"/>
-        </mvc:interceptor>
+        </mvc:interceptor>-->
     </mvc:interceptors>
 
     <!--    配置thymeleaf-->
@@ -88,4 +88,17 @@
 
     <!--    开启mvc的注解驱动-->
     <mvc:annotation-driven/>
+
+<!--    配置异常处理类-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <!--键表示处理器方法执行过程中出现的异常
+                值表示返回的视图，跳转到指定页面-->
+                <prop key="java.lang.NullPointerException">error</prop>
+            </props>
+        </property>
+<!--        将异常信息共享在请求域中-->
+        <property name="exceptionAttribute" value="exceptionInfo"/>
+    </bean>
 </beans>

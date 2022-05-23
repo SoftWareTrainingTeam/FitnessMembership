@@ -7,22 +7,42 @@
         equip_id
         ,type,label,purchase_date,available
     </sql>
-    <select id="selectAllEquip" resultType="com.fitness.entity.Equipment">
+    <select id="selectAllEquip" resultType="Equipment">
         select
         <include refid="allField"/>
         from equipment
     </select>
-    <select id="selectEquipById" resultType="com.fitness.entity.Equipment">
+<!--    映射一对一关系-->
+    <resultMap id="equipAndTypeMap" type="Equipment">
+        <id property="equipId" column="equip_id"/>
+        <result property="label" column="label"/>
+        <result property="type" column="type"/>
+        <result property="purchaseDate" column="purchase_date"/>
+        <result property="available" column="available"/>
+<!--        配置封装EquipType类的内容-->
+        <association property="equipType" column="type_id" javaType="EquipType">
+            <result property="typeId" column="type"/>
+            <result property="type" column="etype"/>
+            <result property="price" column="price"/>
+            <result property="producer" column="producer"/>
+            <result property="productNumber" column="product_number"/>
+        </association>
+    </resultMap>
+    <select id="selectAll" resultMap="equipAndTypeMap">
+        select equip_id,equipment.type AS type,equip_type.type AS etype,label,purchase_date,available,producer,product_number,price from equipment,equip_type
+where equipment.type = equip_type.type_id
+    </select>
+    <select id="selectEquipById" resultType="Equipment">
         select
         <include refid="allField"/>
         from equipment
         where equip_id=#{id}
     </select>
-    <insert id="insertEquip" parameterType="com.fitness.entity.Equipment">
+    <insert id="insertEquip" parameterType="Equipment">
         insert into equipment (<include refid="allField"/>)
         values (#{equipId},#{type},#{label},#{purchaseDate},#{available})
     </insert>
-    <update id="updateEquip" parameterType="com.fitness.entity.Equipment">
+    <update id="updateEquip" parameterType="Equipment">
         update equipment
         set type         = #{type},
             label=#{label},
