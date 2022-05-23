@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public Result deleteMember(String id) {
     if(courseMapper.getMemberCourseNumber(id) > 0) {
-      return new Result(Result.OK, "该会员有未完成课程，暂不能注销~");
+      return new Result(Result.PARAMETER_ERROR, "该会员有未完成课程，暂不能注销~");
     }
     memberMapper.deleteMember(id);
     return new Result(Result.OK, "注销成功~");

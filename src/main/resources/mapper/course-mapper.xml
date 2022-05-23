@@ -80,7 +80,6 @@
     <update id="updateCourse">
         update course set coach_id = #{coach.coachId}, course_id = #{courseInfo.courseId}
         where member_id = #{member.memberId}
-    </update>
 
     <!--8. 删除课选-->
     <delete id="deleteCourse">

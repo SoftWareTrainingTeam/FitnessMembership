@@ -77,7 +77,7 @@ public class CoachServiceImpl implements CoachService {
   @Override
   public Result deleteCoach(String id) {
     if(courseMapper.getCoachCourseNumber(id) > 0) {
-      return new Result(Result.OK, "该教练有未完成的课程，暂不能注销~");
+      return new Result(Result.PARAMETER_ERROR, "该教练有未完成的课程，暂不能注销~");
     }
     coachMapper.deleteCoach(id);
     return new Result(Result.OK, "注销成功~");

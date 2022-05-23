@@ -74,7 +74,7 @@ public class CourseInfoServiceImpl implements CourseInfoService {
   @Override
   public Result deleteCourseInfo(String id) {
     if(courseMapper.getCourseInfoNumber(id) > 0) {
-      return new Result(Result.OK, "该课程被选修中，暂不能删除~");
+      return new Result(Result.PARAMETER_ERROR, "该课程被选修中，暂不能删除~");
     }
     courseInfoMapper.deleteCourseInfo(id);
     return new Result(Result.OK, "删除成功~");
