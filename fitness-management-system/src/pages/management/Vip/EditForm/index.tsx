@@ -39,7 +39,7 @@ const EditForm: React.FC<IProps> = (
   // 表单提交
   const handleSubmit = async (values: any) => {
     try {
-      values.birthday = moment(values.birthday).format('X')
+      values.birthday = moment(values.birthday).valueOf()
       values.address = (values.address as string[]).join('-')
       let res
       if (type) {

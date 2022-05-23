@@ -78,24 +78,32 @@
             routes: [
               {
                 path: './',
-                redirect: './members'
+                redirect: './member'
               },
               {
-                path: './members',
+                path: './member',
                 component: './management/Vip',
               },
               {
-                path: './coaches',
+                path: './coache',
                 component: './management/Coach'
               },
               {
-                path: './courses',
-                component: './Test'
+                path: './course',
+                component: './management/Course'
+              },
+              {
+                path: './course-select',
+                component: './management/CourseSelect'
               },
               {
                 component: './404'
               }
             ]
+          },
+          {
+            path: '/op/category',
+            component: './management/Category'
           },
           {
             path: '/op/member-card',

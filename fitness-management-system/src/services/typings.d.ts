@@ -1,17 +1,20 @@
 import { Moment } from "moment"
 
+// 通用返回结果
 export type ResponseResult<T = undefined> = {
   code: number,
   msg: string,
   data: T
 }
 
+// 登录参数
 export type LoginParams = {
   username: string,
   password: string,
   code: string,
 }
 
+// 当前登录用户
 export type CurrentUser = {
   username: string,
   type: '1' | '2',
@@ -34,6 +37,7 @@ export type CurrentUser = {
   // phone?: string;
 }
 
+// 会员
 export type Vip = {
   memberId: string,
   name: string,
@@ -44,6 +48,7 @@ export type Vip = {
   registTime: number
 }
 
+// 教练
 export type Coach = {
   coachId: string,
   coachName: string,
@@ -53,4 +58,29 @@ export type Coach = {
   entryTime: string,
   coachType: '1' | '2' | '3',
   coachLevel: '1' | '2' | '3'
+}
+
+// 课程
+export type Course = {
+  courseId: string,
+  courseName: string,
+  description: string,
+  startTime:  string | Moment,
+  frequency: string,
+  price: number
+}
+
+export type CourseInfo = {
+  coach: Coach,
+  courseInfo: Course,
+  member: Vip
+}
+
+// 器材分类
+export type EquipCate = {
+  typeId: number,
+  type: string,
+  producer: string,
+  productNumber: string,
+  price: number
 }

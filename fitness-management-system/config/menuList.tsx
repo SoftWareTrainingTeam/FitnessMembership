@@ -1,5 +1,4 @@
 import {
-  AreaChartOutlined,
   TeamOutlined,
   ContactsOutlined,
   ClusterOutlined,
@@ -14,14 +13,22 @@ import {
   SafetyCertificateOutlined,
   SettingOutlined,
   AuditOutlined,
-  RedEnvelopeOutlined
+  RedEnvelopeOutlined,
+  DashboardOutlined,
+  UnorderedListOutlined
 } from "@ant-design/icons";
 
-export const menuList = [
+export type Menu = {
+  path: string,
+  name: string,
+  icon: JSX.Element,
+  routes?: Menu[]
+}
+export const menuList: Menu[] = [
   {
     path: '/op/analysis',
-    name: '数据分析',
-    icon: <AreaChartOutlined />
+    name: '仪表盘',
+    icon: <DashboardOutlined />
   },
   {
     path: '/op/usermanage',
@@ -58,31 +65,41 @@ export const menuList = [
     ]
   },
   {
-    path: '/op/equipment',
-    name: '设备管理',
-    icon: <KeyOutlined />
-  },
-  {
     path: '/op/management',
     name: '信息管理',
     icon: <ProfileOutlined />,
     routes: [
       {
-        path: '/op/management/members',
+        path: '/op/management/member',
         name: '会员管理',
         icon: <IdcardOutlined />
       },
       {
-        path: '/op/management/coaches',
+        path: '/op/management/coache',
         name: '教练管理',
         icon: <UserOutlined />
       },
       {
-        path: '/op/management/courses',
+        path: '/op/management/course',
         name: '课程管理',
+        icon: <PieChartOutlined />
+      },
+      {
+        path: '/op/management/course-select',
+        name: '选课信息',
         icon: <PieChartOutlined />
       }
     ]
+  },
+  {
+    path: '/op/category',
+    name: '器材分类',
+    icon: <UnorderedListOutlined />
+  },
+  {
+    path: '/op/equipment',
+    name: '器材管理',
+    icon: <KeyOutlined />
   },
   {
     path: '/op/member-card',

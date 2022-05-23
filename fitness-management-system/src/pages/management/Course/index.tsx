@@ -1,90 +1,60 @@
 import React, { useMemo, useRef, useState } from 'react'
 import ProTable, { ActionType, ProColumnType } from '@ant-design/pro-table'
 import { Button, Modal, message } from 'antd'
-import type { Coach } from '@/services/typings'
+import type { Course } from '@/services/typings'
 import dayjs from '@/utils/dayjs'
 import { PlusOutlined } from '@ant-design/icons'
+import { deleteCourse, getCourseList } from '@/services/course'
 import EditForm from './EditForm'
-import { deleteCoach, getCoachList } from '@/services/coach'
-const CoachManage: React.FC = () => {
+const CourseManage: React.FC = () => {
   const [visible, setVisible] = useState(false)
   const [type, setType] = useState<0 | 1>(0)   //0添加， 1修改
-  const [defaultValues, setDefaultValues] = useState<Coach | null>(null)
+  const [defaultValues, setDefaultValues] = useState<Course | null>(null)
   const actionRef = useRef<ActionType>()
-  const columns: ProColumnType<Coach>[] = useMemo(() => {
+  const columns: ProColumnType<Course>[] = useMemo(() => {
     return [
       {
-        title: '教练编号',
-        key: 'coachId',
-        dataIndex: 'coachId'
+        title: '课程编号',
+        key: 'courseId',
+        dataIndex: 'courseId'
       },
       {
-        title: '教练姓名',
-        key: 'coachName',
-        dataIndex: 'coachName'
+        title: '课程名称',
+        key: 'courseName',
+        dataIndex: 'courseName'
       },
       {
-        title: '性别',
-        key: 'coachSex',
-        dataIndex: 'coachSex'
+        title: '课程信息',
+        key: 'description',
+        dataIndex: 'description'
       }, {
-        title: '联系电话',
-        key: 'coachTel',
-        dataIndex: 'coachTel',
+        title: '课时',
+        key: 'frequency',
+        dataIndex: 'frequency',
       }, {
-        title: '教练类型',
-        key: 'coachType',
-        dataIndex: 'coachType',
-        render: (_, coach: Coach) => {
-          return (
-            <span>
-              {
-                coach.coachType === '1'
-                ? '巡场'
-                : coach.coachType === '2'
-                ? '团操'
-                : '私人'
-              }
-            </span>
-          )
-        }
+        title: '价格￥',
+        key: 'price',
+        dataIndex: 'price',
       }, {
-        title: '教练等级',
-        key: 'coachLevel',
-        dataIndex: 'coachLevel',
-        render: (_, coach: Coach) => {
-          return (
-            <span>
-              {
-                coach.coachLevel === '1'
-                ? '初级'
-                : coach.coachType === '2'
-                ? '中级'
-                : '高级'
-              }
-            </span>
-          )
-        }
-      }, {
-        title: '入职时间',
-        key: 'entryTime',
-        dataIndex: 'entryTime',
-        render: (_, coach: Coach) => {
-          return dayjs(coach.entryTime).format('YYYY-MM-DD HH:ss')
+        title: '开课时间',
+        key: 'startTime',
+        dataIndex: 'startTime',
+        render: (_, course: Course) => {
+          return dayjs(course.startTime as string).format('YYYY-MM-DD HH:ss')
         }
       }, {
         title: '操作',
         key: 'memberId',
         width: '20%',
         align: 'center',
-        render: (_, coach: Coach) => {
+        render: (_, course: Course) => {
           return [
             <Button
               key="edit"
               type="link"
               onClick={() => {
                 setType(1)
-                setDefaultValues({ ...coach })
+                setDefaultValues({ ...course })
                 setVisible(true)
               }}
             >
@@ -95,7 +65,7 @@ const CoachManage: React.FC = () => {
               type="link"
               danger
               onClick={() => {
-                handleDelete(coach.coachId)
+                handleDelete(course.courseId)
               }}
             >
               删除
@@ -108,33 +78,34 @@ const CoachManage: React.FC = () => {
 
   const handleDelete = (id: string) => {
     Modal.confirm({
-      title: '确认删除改教练吗?',
+      title: '确认删除该课程吗?',
       cancelText: '取消',
       okText: '确认',
       maskClosable: false,
       onCancel: () => { },
       onOk: async () => {
         try {
-          const {code, msg = '删除失败!请重试'} = await deleteCoach(id)
-          if (code === 200) {
-            message.success(msg)
+          const res = await deleteCourse(id)
+          if (res.code === 200) {
+            message.success('删除成功!')
             actionRef.current?.reload()
             return
           }
-          message.warn(msg)
+          throw Error('删除失败!请重试')
         } catch (err) {
           message.error('删除失败!请重试')
+          return
         }
       }
     })
   }
   return (
     <>
-      <ProTable<Coach>
-        rowKey="coachId"
+      <ProTable<Course>
+        rowKey="courseId"
         cardBordered
         dateFormatter="string"
-        headerTitle={<h2>教练管理</h2>}
+        headerTitle={<h2>课程管理</h2>}
         actionRef={actionRef}
         columns={columns}
         search={false}
@@ -142,7 +113,7 @@ const CoachManage: React.FC = () => {
           search: {
             allowClear: true,
             style: { width: 300 },
-            placeholder: '支持姓名，电话号码模糊查询',
+            placeholder: '课程名',
             enterButton: <Button type="primary">查询</Button>
           },
           fullScreen: true
@@ -152,7 +123,7 @@ const CoachManage: React.FC = () => {
           const {
             code,
             data: { list, total }
-          } = await getCoachList(param)
+          } = await getCourseList(param)
           return {
             data: list,
             total,
@@ -179,7 +150,7 @@ const CoachManage: React.FC = () => {
               setVisible(true)
             }}
           >
-            添加教练
+            添加课程
           </Button>,
         ]}
       />
@@ -194,4 +165,4 @@ const CoachManage: React.FC = () => {
   )
 }
 
-export default CoachManage
+export default CourseManage

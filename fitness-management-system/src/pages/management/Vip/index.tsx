@@ -84,13 +84,13 @@ const VipMember: React.FC = () => {
       onCancel: () => { },
       onOk: async () => {
         try {
-          const res = await deleteVip(id)
-          if (res.code === 200) {
-            message.success('注销成功!')
+          const {code, msg = '注销失败!请重试'} = await deleteVip(id)
+          if (code === 200) {
+            message.success(msg)
             actionRef.current?.reload()
             return
           }
-          throw Error('注销失败!请重试')
+          message.warn(msg)
         } catch (err) {
           message.error('注销失败!请重试')
           return
@@ -131,7 +131,10 @@ const VipMember: React.FC = () => {
         }}
         pagination={{
           showQuickJumper: true,
-          pageSize: 6,
+          showSizeChanger: true,
+          pageSizeOptions: [5, 10, 15, 20],
+          defaultPageSize: 5,
+          // pageSize: 10,
           showTotal: (total, range) => {
             return `总共${total}条`
           },

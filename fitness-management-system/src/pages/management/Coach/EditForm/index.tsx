@@ -36,9 +36,7 @@ const EditForm: React.FC<IProps> = (
   // 表单提交
   const handleSubmit = async (values: any) => {
     try {
-      values.coachBirth = moment(values.coachBirth).format('X')
-      // values.coachType = values.coachType * 1
-      // values.coachLevel = values.coachLevel * 1
+      values.coachBirth = moment(values.coachBirth).valueOf()
       let res
       if (type) {
         res = await updateCoach({
