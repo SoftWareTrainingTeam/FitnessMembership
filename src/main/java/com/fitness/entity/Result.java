@@ -1,11 +1,13 @@
 package com.fitness.entity;
 
+import java.io.Serializable;
+
 /**
  * @author: chiatso
  * @create: 2022-05-19 14:50
  * @description: 通用返回实体类
  */
-public class Result<T> {
+public class Result<T> implements Serializable {
 
 
   //状态码

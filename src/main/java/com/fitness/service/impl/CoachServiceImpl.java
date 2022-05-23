@@ -1,6 +1,7 @@
 package com.fitness.service.impl;
 
 import com.fitness.dao.CoachMapper;
+import com.fitness.dao.CourseMapper;
 import com.fitness.entity.Coach;
 import com.fitness.entity.Result;
 import com.fitness.exception.PageNumberException;
@@ -25,9 +26,12 @@ public class CoachServiceImpl implements CoachService {
 
   private CoachMapper coachMapper;
 
+  private CourseMapper courseMapper;
+
   @Autowired
-  public CoachServiceImpl(CoachMapper coachMapper) {
+  public CoachServiceImpl(CoachMapper coachMapper, CourseMapper courseMapper) {
     this.coachMapper = coachMapper;
+    this.courseMapper = courseMapper;
   }
 
   @Override
@@ -72,6 +76,9 @@ public class CoachServiceImpl implements CoachService {
 
   @Override
   public Result deleteCoach(String id) {
+    if(courseMapper.getCoachCourseNumber(id) > 0) {
+      return new Result(Result.OK, "该教练有未完成的课程，暂不能注销~");
+    }
     coachMapper.deleteCoach(id);
     return new Result(Result.OK, "注销成功~");
   }

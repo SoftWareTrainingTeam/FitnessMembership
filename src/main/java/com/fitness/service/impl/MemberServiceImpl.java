@@ -1,5 +1,6 @@
 package com.fitness.service.impl;
 
+import com.fitness.dao.CourseMapper;
 import com.fitness.dao.MemberMapper;
 import com.fitness.entity.Member;
 import com.fitness.entity.Result;
@@ -25,9 +26,12 @@ public class MemberServiceImpl implements MemberService {
 
   private MemberMapper memberMapper;
 
+  private CourseMapper courseMapper;
+
   @Autowired
-  public MemberServiceImpl(MemberMapper memberMapper) {
+  public MemberServiceImpl(MemberMapper memberMapper, CourseMapper courseMapper) {
     this.memberMapper = memberMapper;
+    this.courseMapper = courseMapper;
   }
 
   @Override
@@ -44,6 +48,9 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   public Result deleteMember(String id) {
+    if(courseMapper.getMemberCourseNumber(id) > 0) {
+      return new Result(Result.OK, "该会员有未完成课程，暂不能注销~");
+    }
     memberMapper.deleteMember(id);
     return new Result(Result.OK, "注销成功~");
   }
@@ -77,8 +84,5 @@ public class MemberServiceImpl implements MemberService {
     Result<PageInfo<Member>> result = new Result<>(Result.OK, "查询成功~", pageInfo);
     return result;
   }
-
-
-
 
 }

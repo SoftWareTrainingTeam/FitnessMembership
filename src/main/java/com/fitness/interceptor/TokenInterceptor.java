@@ -23,23 +23,28 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     //从请求头的Authorization拿到token
     String token = request.getHeader("Authorization");
-    Result<String> result = new Result<>();
+    response.setContentType("application/json;charset=UTF-8");
+//    Result<String> result = new Result<>();
     try {
       //验证token
       JwtUtil.verify(token);
       return true;
     } catch (TokenExpiredException e) {
-      result = new Result<>(Result.NOT_ALLOWED, "Token过期~");
-    } catch (SignatureVerificationException e){
-      result = new Result<>(Result.NOT_ALLOWED, "签名错误~");
-    } catch (AlgorithmMismatchException e){
-      result = new Result<>(Result.NOT_ALLOWED, "解密错误~");
+//      result = new Result<>(Result.NOT_ALLOWED, "Token过期~");
+      response.sendError(401, "Token过期~");
+    } catch (SignatureVerificationException e) {
+//      result = new Result<>(Result.NOT_ALLOWED, "签名错误~");
+      response.sendError(401, "签名错误~");
+    } catch (AlgorithmMismatchException e) {
+//      result = new Result<>(Result.NOT_ALLOWED, "解密错误~");
+      response.sendError(401, "解密错误~");
     } catch (Exception e) {
-      result = new Result<>(Result.NOT_ALLOWED, "token无效~");
+//      result = new Result<>(Result.NOT_ALLOWED, "token无效~");
+      response.sendError(401, "token无效~");
     }
-    String json = new ObjectMapper().writeValueAsString(result);
-    response.setContentType("application/json;charset=UTF-8");
-    response.getWriter().println(json);
+//    String json = new ObjectMapper().writeValueAsString(result);
+//    response.setContentType("application/json;charset=UTF-8");
+//    response.getWriter().println(json);
     return false;
   }
 }

@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -19,7 +20,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CourseInfo {
+public class CourseInfo implements Serializable {
   //课程id号 自增
   private String courseId;
 
