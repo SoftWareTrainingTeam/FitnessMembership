@@ -80,7 +80,7 @@ const AvatarDropdown: React.FC = () => {
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
-      <Menu.Item key="center">
+      {/* <Menu.Item key="center">
         <UserOutlined />
         个人中心
       </Menu.Item>
@@ -88,7 +88,7 @@ const AvatarDropdown: React.FC = () => {
         <SettingOutlined />
         个人设置
       </Menu.Item>
-      <Menu.Divider />
+      <Menu.Divider /> */}
 
       <Menu.Item key="logout">
         <LogoutOutlined />

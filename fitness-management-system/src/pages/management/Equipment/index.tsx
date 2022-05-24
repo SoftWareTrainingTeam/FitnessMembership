@@ -1,47 +1,70 @@
 import React, { useMemo, useRef, useState } from 'react'
 import ProTable, { ActionType, ProColumnType } from '@ant-design/pro-table'
 import { Button, Modal, message } from 'antd'
-import type { EquipCate } from '@/services/typings'
+import type { Equip } from '@/services/typings'
 import { PlusOutlined } from '@ant-design/icons'
-import { deleteEquipCate, getEquipCateList } from '@/services/category'
-import EditForm from './EditForm'
-const Category: React.FC = () => {
+import { deleteEquip, getEquipList } from '@/services/equip'
+import dayjs from '@/utils/dayjs'
+import EquipDetail from './components/equipDetail'
+import EditForm from './components/EditForm'
+const Equipment: React.FC = () => {
   const [visible, setVisible] = useState(false)
+  const [equip, setEquip] = useState<Equip | null>(null)
   const [type, setType] = useState<0 | 1>(0)   //0添加， 1修改
-  const [defaultValues, setDefaultValues] = useState<EquipCate | null>(null)
+  const [defaultValues, setDefaultValues] = useState<Equip | null>(null)
   const actionRef = useRef<ActionType>()
-  const columns: ProColumnType<EquipCate>[] = useMemo(() => {
+  const columns: ProColumnType<Equip>[] = useMemo(() => {
     return [
       {
-        title: '分类名称',
-        key: 'type',
-        dataIndex: 'type'
+        title: '器材编号',
+        key: 'equipId',
+        dataIndex: 'equipId',
       },
       {
-        title: '生产厂家',
-        key: 'producer',
-        dataIndex: 'producer'
+        title: '器材名称',
+        key: 'label',
+        dataIndex: 'label'
+      },
+      {
+        title: '状态',
+        key: 'available',
+        dataIndex: 'available',
+        valueType: 'select',
+        valueEnum: {
+          0: { text: <span style={{ color: '#ff4d4f' }}>不可用</span>, status: 'Error' },
+          1: { text: <span style={{ color: '#52c41a' }}>正常</span>, status: 'Success' },
+          2: { text: <span style={{ color: '#1890ff' }}>维护中</span>, status: 'Processing' },
+        }
       }, {
-        title: '产品型号',
-        key: 'productNumber',
-        dataIndex: 'productNumber',
-      }, {
-        title: '产品价格￥',
-        key: 'price',
-        dataIndex: 'price',
+        title: '购买日期',
+        key: 'purchaseDate',
+        dataIndex: 'purchaseDate',
+        render: (_, equip: Equip) => {
+          return dayjs(equip.purchaseDate).format('YYYY-MM-DD HH:ss')
+        }
       }, {
         title: '操作',
         key: 'memberId',
         width: '20%',
         align: 'center',
-        render: (_, cate: EquipCate) => {
+        render: (_, equip: Equip) => {
           return [
+            <Button
+              key="look"
+              type="link"
+              onClick={() => {
+                setEquip(equip)
+                // setShowDetail(true)
+              }}
+            >
+              详情
+            </Button>,
             <Button
               key="edit"
               type="link"
               onClick={() => {
                 setType(1)
-                setDefaultValues({ ...cate})
+                setDefaultValues({ ...equip })
                 setVisible(true)
               }}
             >
@@ -52,7 +75,7 @@ const Category: React.FC = () => {
               type="link"
               danger
               onClick={() => {
-                handleDelete(cate.typeId)
+                handleDelete(equip.equipId)
               }}
             >
               删除
@@ -72,7 +95,7 @@ const Category: React.FC = () => {
       onCancel: () => { },
       onOk: async () => {
         try {
-          const { code, msg = '删除失败!请重试' } = await deleteEquipCate(id)
+          const { code, msg = '删除失败!请重试' } = await deleteEquip(id)
           if (code === 200) {
             message.success(msg)
             actionRef.current?.reload()
@@ -88,21 +111,21 @@ const Category: React.FC = () => {
   }
   return (
     <>
-      <ProTable<EquipCate>
-        rowKey="typeId"
+      <ProTable<Equip>
+        rowKey="equipId"
         cardBordered
         dateFormatter="string"
-        headerTitle={<h2>分类管理</h2>}
+        headerTitle={<h2>器材管理</h2>}
         actionRef={actionRef}
         columns={columns}
         search={false}
         options={{
-          search: {
-            allowClear: true,
-            style: { width: 300 },
-            placeholder: '输入器材编号',
-            enterButton: <Button type="primary">查询</Button>
-          },
+          // search: {
+          //   allowClear: true,
+          //   style: { width: 300 },
+          //   placeholder: '按器材编号查询',
+          //   enterButton: <Button type="primary">查询</Button>
+          // },
           fullScreen: true
         }}
         request={async (param) => {
@@ -112,7 +135,7 @@ const Category: React.FC = () => {
             data: {
               list,
               total
-            } } = await getEquipCateList({
+            } } = await getEquipList({
               offset: param.current!,
               limit: param.pageSize!
             })
@@ -143,7 +166,7 @@ const Category: React.FC = () => {
               setVisible(true)
             }}
           >
-            添加分类
+            添加器材
           </Button>,
         ]}
       />
@@ -154,8 +177,12 @@ const Category: React.FC = () => {
         setVisible={setVisible}
         defaultValues={defaultValues}
       />
+      <EquipDetail
+        equip={equip}
+        setEquip={setEquip}
+      />
     </>
   )
 }
 
-export default Category
+export default Equipment

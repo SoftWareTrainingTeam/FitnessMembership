@@ -28,7 +28,6 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   breadcrumbNameMap: Record<string, MenuDataItem>;
 };
 
-
 type TabProp = { key: string, tab: React.ReactNode, closable?: boolean}
 
 const matchMenu = (menuList: Menu[], key: string): TabProp | null => {
@@ -85,9 +84,6 @@ const AdminLayout: React.FC<BasicLayoutProps> = (props) => {
         route={{
           routes: menuList
         }}
-        menu={{
-          defaultOpenAll: true
-        }}
         headerContentRender={() => <ProBreadcrumb />}
         breadcrumbRender={(routers = []) => [
           {
@@ -141,7 +137,6 @@ const AdminLayout: React.FC<BasicLayoutProps> = (props) => {
               }
             }}
             onTabChange={(key) => {
-              console.log(key);
               history.push(key)
             }}
           >

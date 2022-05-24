@@ -84,3 +84,13 @@ export type EquipCate = {
   productNumber: string,
   price: number
 }
+
+// 器材
+export type Equip = {
+  equipId:  number,
+  type: number,
+  label: string,
+  purchaseDate: string,
+  available: number,
+  equipType?: EquipCate
+}

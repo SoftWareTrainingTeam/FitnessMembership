@@ -68,11 +68,7 @@
               }
             ]
           },
-          {
-            path: '/op/equipment',
-            component: './Test'
-          },
-          // 会员，教练，课程管理
+          // 会员，教练，课程管理，选课
           {
             path: '/op/management',
             routes: [
@@ -106,6 +102,10 @@
             component: './management/Category'
           },
           {
+            path: '/op/equipment',
+            component: './management/Equipment'
+          },
+          {
             path: '/op/member-card',
             component: './Test'
           },
@@ -120,12 +120,18 @@
           {
             path: '/op/settings',
             component: './Test'
+          },
+          {
+            component: './404'
           }
         ]
       },
       {
         path: '/',
         redirect: '/op'
+      },
+      {
+        component: './404'
       }
     ]
   },
