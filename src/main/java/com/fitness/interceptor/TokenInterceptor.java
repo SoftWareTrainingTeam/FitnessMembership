@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * @create: 2022-05-19 13:50
  * @description: 拦截器 验证有没有携带token
  */
-/*public class TokenInterceptor implements HandlerInterceptor {
+public class TokenInterceptor implements HandlerInterceptor {
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -47,4 +47,4 @@ import javax.servlet.http.HttpServletResponse;
 //    response.getWriter().println(json);
     return false;
   }
-}*/
+}
