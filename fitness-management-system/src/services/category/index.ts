@@ -12,6 +12,15 @@ export function getEquipCateList(body: {offset: number, limit: number}) {
       params: body
     })
 }
+export function getAllEquipCateList() {
+  return request<
+    ResponseResult<{
+      list: EquipCate[]
+    }>
+    >('/api/selectAllEquipTypes2', {
+      method: 'GET'
+    })
+}
 // 添加分类
 export function addEquipCate(body: EquipCate) {
   return request<
