@@ -32,6 +32,12 @@
         select equip_id,equipment.type AS type,equip_type.type AS etype,label,purchase_date,available,producer,product_number,price from equipment,equip_type
 where equipment.type = equip_type.type_id
     </select>
+
+    <select id="selectByKeyWord" resultType="Equipment">
+        SELECT * FROM equipment WHERE equip_id LIKE CONCAT('%',#{keyword},'%')
+OR label LIKE CONCAT('%',#{keyword},'%')
+    </select>
+
     <select id="selectEquipById" resultType="Equipment">
         select
         <include refid="allField"/>

@@ -1,7 +1,9 @@
 package com.fitness.dao;
 
 import com.fitness.entity.EquipType;
+import com.fitness.entity.Equipment;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,6 +20,13 @@ public interface EquipTypeMapper {
     List<EquipType> selectAll(int offset,int limit);
 
     List<EquipType> selectAll();
+
+    /**
+     * 模糊查询
+     * @param keyword
+     * @return
+     */
+    List<EquipType> selectByKeyWord(@Param("keyword") String keyword);
 
     EquipType selectTypeById(int id);
 

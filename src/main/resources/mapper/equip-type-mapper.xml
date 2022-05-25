@@ -6,31 +6,38 @@
 
     <sql id="selectField">type_id,type,price,producer,product_number</sql>
 
-    <select id="selectAll" resultType="com.fitness.entity.EquipType">
+    <select id="selectAll" resultType="EquipType">
         select <include refid="selectField"></include> from equip_type
 	</select>
 
-    <select id="selectTypeById" resultType="com.fitness.entity.EquipType">
+    <select id="selectByKeyWord" resultType="EquipType">
+        SELECT * FROM equip_type WHERE type LIKE CONCAT('%',#{keyword},'%')
+OR type_id LIKE CONCAT('%',#{keyword},'%')
+OR producer LIKE CONCAT('%',#{keyword},'%')
+OR product_number  LIKE CONCAT('%',#{keyword},'%')
+    </select>
+
+    <select id="selectTypeById" resultType="EquipType">
 select <include refid="selectField"></include> from equip_type
 where type_id=#{id}
     </select>
 
-    <select id="selectTypeByType" resultType="com.fitness.entity.EquipType">
+    <select id="selectTypeByType" resultType="EquipType">
         select <include refid="selectField"></include> from equip_type
         where type=#{type}
     </select>
 
-    <insert id="insertType" parameterType="com.fitness.entity.EquipType">
+    <insert id="insertType" parameterType="EquipType">
         insert into equip_type (<include refid="selectField"></include>)
 values (#{typeId},#{type},#{price},#{producer},#{productNumber})
     </insert>
 
-    <update id="updateType" parameterType="com.fitness.entity.EquipType">
+    <update id="updateType" parameterType="EquipType">
         update equip_type set type=#{type},price=#{price},producer=#{producer},product_number=#{productNumber}
-where id=#{id}
+where type_id=#{id}
     </update>
 
     <delete id="deleteType">
-        delete from equip_type where id = #{id}
+        delete from equip_type where type_id = #{id}
     </delete>
 </mapper>

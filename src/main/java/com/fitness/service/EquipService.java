@@ -27,8 +27,8 @@ public class EquipService {
     /**
      * 老师在文档里说扫描包的问题，实测还是要加上@Transactional注解，sqlSession对象才能被Spring管理
      *
-     * @return
-     */
+             * @return
+             */
     @Transactional
     public Result<PageInfo<Equipment>> showEquips(int offset, int limit) {
         if (offset < 1) {
@@ -36,7 +36,7 @@ public class EquipService {
         }
         Result<PageInfo<Equipment>> result = new Result<>();
         PageHelper.startPage(offset, limit);
-        List<Equipment> equipmentList = equipmentMapper.selectAllEquip(offset, limit);
+        List<Equipment> equipmentList = equipmentMapper.selectAllEquip();
         PageInfo<Equipment> pageInfo = new PageInfo<>(equipmentList);
         result.setCode(OK);
         result.setMsg("器材列表查询成功");
@@ -51,10 +51,25 @@ public class EquipService {
         }
         Result<PageInfo<Equipment>> result = new Result<>();
         PageHelper.startPage(offset, limit);
-        List<Equipment> equipmentList = equipmentMapper.selectAll(offset, limit);
+        List<Equipment> equipmentList = equipmentMapper.selectAll();
         PageInfo<Equipment> pageInfo = new PageInfo<>(equipmentList);
         result.setCode(OK);
         result.setMsg("器材列表(附器材信息)查询成功");
+        result.setData(pageInfo);
+        return result;
+    }
+
+    @Transactional
+    public Result<PageInfo<Equipment>> selectByKeyWord(String keyword,int offset,int limit){
+        if (offset < 1) {
+            throw new PageNumberException("起使页码无效");
+        }
+        Result<PageInfo<Equipment>> result = new Result<>();
+        PageHelper.startPage(offset, limit);
+        List<Equipment> equipmentList = equipmentMapper.selectByKeyWord(keyword);
+        PageInfo<Equipment> pageInfo = new PageInfo<>(equipmentList);
+        result.setCode(OK);
+        result.setMsg("模糊查询成功");
         result.setData(pageInfo);
         return result;
     }

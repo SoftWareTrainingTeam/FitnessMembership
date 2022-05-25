@@ -50,6 +50,18 @@ public class EquipTypeService {
     }
 
     @Transactional
+    public Result<PageInfo<EquipType>> selectByKeyWord(String keyword,int offset,int limit){
+        Result<PageInfo<EquipType>> result = new Result<>();
+        PageHelper.startPage(offset, limit);
+        List<EquipType> list = equipTypeMapper.selectByKeyWord(keyword);
+        PageInfo<EquipType> pageInfo = new PageInfo<>(list);
+        result.setCode(OK);
+        result.setMsg("模糊查询成功");
+        result.setData(pageInfo);
+        return result;
+    }
+
+    @Transactional
     public Result<EquipType> selectTypeById(int id){
         Result<EquipType> result = new Result<>();
         EquipType equipType = equipTypeMapper.selectTypeById(id);

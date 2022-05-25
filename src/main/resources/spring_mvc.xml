@@ -47,14 +47,14 @@
             <mvc:exclude-mapping path="/api/login"/>
             <!--不拦截获取验证码-->
             <mvc:exclude-mapping path="/api/captcha"/>
-            <!--不拦截courseinfo-->
+<!--            &lt;!&ndash;不拦截courseinfo&ndash;&gt;
             <mvc:exclude-mapping path="/api/courseinfo/**"/>
-            <!--不拦截member-->
+            &lt;!&ndash;不拦截member&ndash;&gt;
             <mvc:exclude-mapping path="/api/member/**"/>
-            <!--不拦截coach-->
+            &lt;!&ndash;不拦截coach&ndash;&gt;
             <mvc:exclude-mapping path="/api/coach/**"/>
-            <!--不拦截course-->
-            <mvc:exclude-mapping path="/api/course/**"/>
+            &lt;!&ndash;不拦截course&ndash;&gt;
+            <mvc:exclude-mapping path="/api/course/**"/>-->
             <!--不拦截/-->
             <mvc:exclude-mapping path="/"/>
             <bean class="com.fitness.interceptor.TokenInterceptor"/>

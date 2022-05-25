@@ -1,6 +1,7 @@
 package com.fitness.controller;
 
 import com.fitness.entity.EquipType;
+import com.fitness.entity.Equipment;
 import com.fitness.entity.Result;
 import com.fitness.service.EquipTypeService;
 import com.github.pagehelper.PageInfo;
@@ -28,6 +29,11 @@ public class EquipTypeController {
     @GetMapping(path = "/api/selectAllEquipTypes2")
     public Result<PageInfo<EquipType>> showEquipTypes() {
         return equipTypeService.showEquipTypes();
+    }
+
+    @GetMapping(path = "/api/selectType/{keyword}/{offset}/{limit}")
+    public Result<PageInfo<EquipType>> selectByKeyWord(@PathVariable("keyword") String keyword, @PathVariable("offset") int offset, @PathVariable("limit") int limit){
+        return equipTypeService.selectByKeyWord(keyword, offset, limit);
     }
 
     @GetMapping(path = "/api/type/{id}")
