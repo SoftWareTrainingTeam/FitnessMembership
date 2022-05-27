@@ -155,15 +155,8 @@ const EditForm: React.FC<IProps> = (
             }
           ]}
         >
-          <Input placeholder="请输入联系电话" />
+          <Input addonBefore="+86" placeholder="请输入联系电话" />
         </Form.Item>
-        {/* <Form.Item
-          wrapperCol={{ offset: 4 }}
-        >
-          <Button type="primary" htmlType="submit">
-            {type ? '确认修改' : '确认注册'}
-          </Button>
-        </Form.Item> */}
       </Form>
     </Modal>
   )

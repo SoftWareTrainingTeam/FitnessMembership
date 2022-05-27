@@ -32,6 +32,10 @@
             path: '/op/analysis',
             component: './Test'
           },
+          {
+            path: '/op/recharge',
+            component: './Recharge'
+          },
           // 用户管理
           {
             path: '/op/usermanage',
@@ -64,7 +68,7 @@
               },
               {
                 path: './record',
-                component: './Test'
+                component: './Record'
               }
             ]
           },

@@ -36,6 +36,10 @@ const CourseManage: React.FC = () => {
         key: 'price',
         dataIndex: 'price',
       }, {
+        title: '课程容量',
+        key: 'capacity',
+        dataIndex: 'capacity',
+      }, {
         title: '开课时间',
         key: 'startTime',
         dataIndex: 'startTime',

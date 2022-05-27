@@ -5,7 +5,7 @@ import type { Equip } from '@/services/typings'
 import { PlusOutlined } from '@ant-design/icons'
 import { deleteEquip, getEquipList } from '@/services/equip'
 import dayjs from '@/utils/dayjs'
-import EquipDetail from './components/equipDetail'
+import EquipDetail from './components/EquipDetail'
 import EditForm from './components/EditForm'
 const Equipment: React.FC = () => {
   const [visible, setVisible] = useState(false)
