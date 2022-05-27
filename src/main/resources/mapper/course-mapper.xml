@@ -13,6 +13,7 @@
             <result property="telNumber" column="tel_number"/>
             <result property="registTime" column="regist_time"/>
             <result property="address" column="address"/>
+            <result property="balance" column="balance"/>
         </association>
         <association property="coach" javaType="com.fitness.entity.Coach">
             <id column="coach_id" property="coachId"/>
@@ -26,23 +27,24 @@
         </association>
         <association property="courseInfo" javaType="com.fitness.entity.CourseInfo">
             <id property="courseId" column="course_id"/>
-            <result property="courseName" column="course_name"></result>
-            <result property="description" column="description"></result>
-            <result property="startTime" column="start_time"></result>
-            <result property="frequency" column="frequency"></result>
-            <result property="price" column="price"></result>
+            <result property="courseName" column="course_name"/>
+            <result property="description" column="description"/>
+            <result property="startTime" column="start_time"/>
+            <result property="frequency" column="frequency"/>
+            <result property="price" column="price"/>
+            <result property="capacity" column="capacity"/>
         </association>
     </resultMap>
     
     <!--基础查询信息-->
     <sql id="baseQuery">
-        select member.member_id as member_id, name, sex, birthday, tel_number, regist_time, address,
+        select member.member_id as member_id, name, sex, birthday, tel_number, regist_time, address,balance,
                coach.coach_id as coach_id, coach_name, coach_sex, coach_birth, coach_tel, entry_time, coach_type,
                coach_level,
-               course_info.course_id as course_id, course_name, description, start_time, frequency, price
-        from course, member, coach, course_info
-        where course.member_id = member.member_id and course.coach_id
-            = coach.coach_id and course.course_id = course_info.course_id
+               course_info.course_id as course_id, course_name, description, start_time, frequency, price,capacity
+        from course_coach,course_member, member, coach, course_info
+        where course_member.member_id = member.member_id and course_coach.coach_id
+            = coach.coach_id and course_member.course_id = course_info.course_id and course_coach.course_id = course_info.course_id
     </sql>
 
     <!--1. 获取所有选课信息 会员-教练-课程信息-->

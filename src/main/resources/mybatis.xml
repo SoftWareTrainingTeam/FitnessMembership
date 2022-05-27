@@ -14,7 +14,14 @@
     </settings>
 
     <typeAliases>
+        <!--其实可以使用package标签批量别名的-->
         <typeAlias type="com.fitness.entity.Equipment" alias="Equipment"/>
         <typeAlias type="com.fitness.entity.EquipType" alias="EquipType"/>
+
+        <typeAlias type="com.fitness.entity.Coach" alias="Coach"/>
+        <typeAlias type="com.fitness.entity.Member" alias="Member"/>
+        <typeAlias type="com.fitness.entity.CourseInfo" alias="CourseInfo"/>
+        <typeAlias type="com.fitness.entity.CourseCoach" alias="CourseCoach"/>
+        <typeAlias type="com.fitness.entity.CourseMember" alias="CourseMember"/>
     </typeAliases>
 </configuration>

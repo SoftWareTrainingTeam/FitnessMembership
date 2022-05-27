@@ -6,7 +6,7 @@
 
     <!--基础查询信息-->
     <sql id="baseQuery">
-        select member_id, name, sex, birthday, tel_number, regist_time, address
+        select member_id, name, sex, birthday, tel_number, regist_time, address,balance
         from member
     </sql>
 
@@ -38,9 +38,9 @@
 
     <!--5. 新增会员-->
     <insert id="insertMember">
-        insert into member (name, sex, birthday, tel_number, regist_time, address)
+        insert into member (name, sex, birthday, tel_number, regist_time, address,balance)
         values (#{name}, #{sex}, #{birthday},
-                #{telNumber}, #{registTime}, #{address})
+                #{telNumber}, #{registTime}, #{address},#{balance})
     </insert>
 
     <!--6. 根据id修改会员信息-->
@@ -51,7 +51,8 @@
             birthday    = #{birthday},
             tel_number  = #{telNumber},
             regist_time = #{registTime},
-            address     = #{address}
+            address     = #{address},
+            balance = #{balance}
         where member_id = #{memberId}
     </update>
 
@@ -64,11 +65,11 @@
 
     <!--8. 批量注册会员-->
     <insert id="insertMembersByBatch">
-        insert into member (name, sex, birthday, tel_number, regist_time, address)
+        insert into member (name, sex, birthday, tel_number, regist_time, address,balance)
         values
         <foreach collection="members" item="member" separator=",">
             (#{name}, #{sex}, #{birthday},
-            #{telNumber}, #{registTime}, #{address})
+            #{telNumber}, #{registTime}, #{address},#{balance})
         </foreach>
     </insert>
 </mapper>

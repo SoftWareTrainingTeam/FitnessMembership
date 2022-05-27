@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fitness.dao.CourseCoachMapper">
+
+    <sql id="course_field">
+        course_id
+        ,course_name,description,start_time,frequency,price,capacity
+    </sql>
+    <sql id="coach_field">
+        coach_id
+        ,coach_name,coach_sex,coach_birth,coach_tel,entry_time,coach_type,coach_level
+    </sql>
+
+    <resultMap id="course_coach" type="CourseCoach">
+        <association property="coach" javaType="Coach">
+            <id property="coachId" column="coach_id"/>
+            <result property="coachName" column="coach_name"/>
+        </association>
+        <association property="courseInfo" javaType="CourseInfo">
+            <id property="courseId" column="course_id"/>
+            <result property="courseName" column="course_name"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllCourseCoach" resultMap="course_coach">
+        select course_info.course_id, course_name, coach.coach_id, coach_name
+        from course_info,
+             course_coach,
+             coach
+        where course_info.course_id = course_coach.course_id
+          and course_coach.coach_id = coach.coach_id
+    </select>
+
+    <select id="selectByCoach" resultMap="course_coach">
+        select course_info.course_id, course_name, coach.coach_id, coach_name
+        from course_info,
+             course_coach,
+             coach
+        where course_info.course_id = course_coach.course_id
+          and course_coach.coach_id = coach.coach_id
+and (coach.coach_id LIKE ('%',#{coachKey},'%') or coach_name LIKE ('%',#{coachKey},'%'))
+    </select>
+
+    <select id="selectByCourse" resultMap="course_coach">
+        select course_info.course_id, course_name, coach.coach_id, coach_name
+        from course_info,
+             course_coach,
+             coach
+        where course_info.course_id = course_coach.course_id
+          and course_coach.coach_id = coach.coach_id
+          and (course_info.course_id LIKE ('%',#{courseKey},'%') or course_name LIKE ('%',#{courseKey},'%'))
+    </select>
+
+    <!--这里的参数就不是对象了，因为对象的属性都是引用-->
+    <insert id="insertCourseCoach">
+        insert into course_coach(course_id, coach_id)
+        values (#{courseId}, #{coachId})
+    </insert>
+
+    <!--    想了一下，关系表不应该有update方法-->
+    <!--    <update id="updateCourseCoach">-->
+    <!--        update set coach_id = #{coachId}-->
+    <!--where course_id = -->
+    <!--    </update>-->
+    <delete id="deleteCourseCoach">
+        delete
+        from course_coach
+        where course_id = #{courseId}
+          and coach_id = #{coachId}
+    </delete>
+</mapper>

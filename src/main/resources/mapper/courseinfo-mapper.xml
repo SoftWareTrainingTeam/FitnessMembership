@@ -10,7 +10,8 @@
                description,
                start_time,
                frequency,
-               price
+               price,
+               capacity
         from course_info
     </sql>
 
@@ -37,8 +38,8 @@
 
     <!--5. 新增课程信息-->
     <insert id="insertCourseInfo">
-        insert into course_info(course_name, description, start_time, frequency, price)
-        values (#{courseName}, #{description}, #{startTime}, #{frequency}, #{price})
+        insert into course_info(course_name, description, start_time, frequency, price,capacity)
+        values (#{courseName}, #{description}, #{startTime}, #{frequency}, #{price},#{capacity})
     </insert>
 
     <!--6. 删除课程信息-->
@@ -50,7 +51,7 @@
     <update id="updateCourseInfo">
         update course_info set course_name = #{courseName}, description = #{description},
                                start_time = #{startTime}, frequency = #{frequency},
-                               price = #{price}
+                               price = #{price},capacity=#{capacity}
         where course_id = #{courseId}
     </update>
 </mapper>

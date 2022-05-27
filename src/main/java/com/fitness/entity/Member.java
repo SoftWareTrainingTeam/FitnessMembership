@@ -48,4 +48,7 @@ public class Member implements Serializable {
 
   //会员地址
   private String address;
+
+  // 账户余额，可以为空
+  private double balance;
 }

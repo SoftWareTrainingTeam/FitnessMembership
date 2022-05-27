@@ -41,24 +41,24 @@
             <mvc:mapping path="/**"/>
             <bean class="com.fitness.interceptor.CorsInterceptor"/>
         </mvc:interceptor>
-        <mvc:interceptor>
+<!--        <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <!--不拦截登录-->
+            &lt;!&ndash;不拦截登录&ndash;&gt;
             <mvc:exclude-mapping path="/api/login"/>
-            <!--不拦截获取验证码-->
+            &lt;!&ndash;不拦截获取验证码&ndash;&gt;
             <mvc:exclude-mapping path="/api/captcha"/>
-<!--            &lt;!&ndash;不拦截courseinfo&ndash;&gt;
+&lt;!&ndash;            &lt;!&ndash;不拦截courseinfo&ndash;&gt;
             <mvc:exclude-mapping path="/api/courseinfo/**"/>
             &lt;!&ndash;不拦截member&ndash;&gt;
             <mvc:exclude-mapping path="/api/member/**"/>
             &lt;!&ndash;不拦截coach&ndash;&gt;
             <mvc:exclude-mapping path="/api/coach/**"/>
             &lt;!&ndash;不拦截course&ndash;&gt;
-            <mvc:exclude-mapping path="/api/course/**"/>-->
-            <!--不拦截/-->
+            <mvc:exclude-mapping path="/api/course/**"/>&ndash;&gt;
+            &lt;!&ndash;不拦截/&ndash;&gt;
             <mvc:exclude-mapping path="/"/>
             <bean class="com.fitness.interceptor.TokenInterceptor"/>
-        </mvc:interceptor>
+        </mvc:interceptor>-->
     </mvc:interceptors>
 
     <!--    配置thymeleaf-->
