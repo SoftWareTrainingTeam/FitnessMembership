@@ -136,7 +136,7 @@ const EditForm: React.FC<IProps> = (
             }
           ]}
         >
-          <Input placeholder="请输入联系电话" />
+          <Input addonBefore="+86" placeholder="请输入联系电话" />
         </Form.Item>
         {/* 教练类型 */}
         <Form.Item

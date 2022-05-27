@@ -1,0 +1,88 @@
+.recordpage {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  &:hover {
+    box-shadow: 6px 0 12px -8px #ddd,
+                -10px 0 18px -8px #ddd,
+                0 -2px 12px -8px #ddd,
+                0 15px 12px -8px #ddd;
+    transition: all .3s linear;
+  }
+  .head {
+    height: 48px;
+    line-height: 48px;
+    padding: 0 24px;
+    display: flex;
+    span {
+      margin-left: 12px;
+      font-size: 16px;
+    }
+  }
+  .weeklist,
+  .daylist {
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .weeklist {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+
+    & li {
+      font-weight: 600;
+      flex: 1 1 auto;
+      text-align: center;
+    }
+  }
+
+  .daylist {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    & li {
+      position: relative;
+      flex: 0 0 14.2%;
+      height: 48px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+    }
+  }
+
+  .leftbtn {
+    left: -48px;
+  }
+
+  .rightbtn {
+    right: -48px;
+  }
+
+  .leftbtn,
+  .rightbtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .sign {
+    text-align: center;
+    padding: 12px;
+  }
+}
+
+.active::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border-radius: 12px;
+  color: #fff;
+  background: #1890ff;
+}

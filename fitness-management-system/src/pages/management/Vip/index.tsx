@@ -6,18 +6,15 @@ import type { Vip } from '@/services/typings'
 import dayjs from '@/utils/dayjs'
 import { PlusOutlined } from '@ant-design/icons'
 import EditForm from './EditForm'
+import RechargeForm from './RechargeForm'
 const VipMember: React.FC = () => {
   const [visible, setVisible] = useState(false)
+  const [isRecharge, setIsRecharge] = useState(false)
   const [type, setType] = useState<0 | 1>(0)   //0添加， 1修改
   const [defaultValues, setDefaultValues] = useState<Vip | null>(null)
   const actionRef = useRef<ActionType>()
   const columns: ProColumnType<Vip>[] = useMemo(() => {
     return [
-      {
-        title: '会员账号',
-        key: 'memberId',
-        dataIndex: 'memberId'
-      },
       {
         title: '会员姓名',
         key: 'name',
@@ -34,6 +31,10 @@ const VipMember: React.FC = () => {
         title: '联系电话',
         key: 'telNumber',
         dataIndex: 'telNumber',
+      }, {
+        title: '账户余额',
+        key: 'balance',
+        dataIndex: 'balance'
       }, {
         title: '注册时间',
         key: 'registTime',
@@ -53,11 +54,20 @@ const VipMember: React.FC = () => {
               type="link"
               onClick={() => {
                 setType(1)
-                setDefaultValues({...vip})
+                setDefaultValues({ ...vip })
                 setVisible(true)
               }}
             >
               编辑
+            </Button>,
+            <Button
+              key="recharge"
+              type="link"
+              onClick={() => {
+                setIsRecharge(true)
+              }}
+            >
+              充值
             </Button>,
             <Button
               key="delete"
@@ -84,7 +94,7 @@ const VipMember: React.FC = () => {
       onCancel: () => { },
       onOk: async () => {
         try {
-          const {code, msg = '注销失败!请重试'} = await deleteVip(id)
+          const { code, msg = '注销失败!请重试' } = await deleteVip(id)
           if (code === 200) {
             message.success(msg)
             actionRef.current?.reload()
@@ -111,7 +121,7 @@ const VipMember: React.FC = () => {
         options={{
           search: {
             allowClear: true,
-            style: {width: 300},
+            style: { width: 300 },
             placeholder: '支持姓名，电话号码模糊查询',
             enterButton: <Button type="primary">查询</Button>
           },
@@ -160,6 +170,10 @@ const VipMember: React.FC = () => {
         actionRef={actionRef}
         setVisible={setVisible}
         defaultValues={defaultValues}
+      />
+      <RechargeForm 
+      visible={isRecharge} 
+      setVisible={setIsRecharge}
       />
     </>
   )

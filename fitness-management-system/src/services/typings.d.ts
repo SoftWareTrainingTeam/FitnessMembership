@@ -45,7 +45,8 @@ export type Vip = {
   birthday: string | Moment,
   address: string | string[],
   telNumber: string,
-  registTime: number
+  registTime: number,
+  balance: number
 }
 
 // 教练
@@ -67,7 +68,8 @@ export type Course = {
   description: string,
   startTime:  string | Moment,
   frequency: string,
-  price: number
+  price: number,
+  capacity: number
 }
 
 export type CourseInfo = {

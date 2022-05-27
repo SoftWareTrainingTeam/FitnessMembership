@@ -129,6 +129,15 @@ const EditForm: React.FC<IProps> = (
         >
           <Input type="number" addonAfter="￥" placeholder="价格" />
         </Form.Item>
+        {/* 课程容量 */}
+         {/* 价格 */}
+         <Form.Item
+          name="capacity"
+          label="课程容量"
+          rules={[{ required: true, message: '请输入课程容量!' }]}
+        >
+          <Input type="number" maxLength={100} placeholder="课程容量" />
+        </Form.Item>
         {/* 开课日期 */}
         <Form.Item
           name="startTime"
