@@ -31,7 +31,7 @@
              member
         where course_info.course_id = course_member.course_id
           and course_member.member_id = member.member_id
-          and (member.member_id LIKE ('%',#{memberKey},'%') or member.name LIKE ('%',#{memberKey},'%'))
+          and (member.member_id LIKE ('%', #{memberKey}, '%') or member.name LIKE ('%', #{memberKey}, '%'))
     </select>
 
     <select id="selectByCourse" resultMap="course_member">
@@ -41,17 +41,20 @@
              member
         where course_info.course_id = course_member.course_id
           and course_member.member_id = member.member_id
-          and (course_info.course_id LIKE ('%',#{courseKey},'%') or course_name LIKE ('%',#{courseKey},'%'))
+          and (course_info.course_id LIKE ('%', #{courseKey}, '%') or course_name LIKE ('%', #{courseKey}, '%'))
     </select>
 
 
     <!--这里的参数就不是对象了，因为对象的属性都是引用-->
     <insert id="insertCourseMember">
-        insert into course_member(course_id,member_id)
-        values (#{courseId},#{memberId})
+        insert into course_member (course_id, member_id)
+        values (#{courseId}, #{memberId})
     </insert>
 
     <delete id="deleteCourseMember">
-        delete from course_member where course_id = #{courseId} and member_id = #{memberId}
+        delete
+        from course_member
+        where course_id = #{courseId}
+          and member_id = #{memberId}
     </delete>
 </mapper>

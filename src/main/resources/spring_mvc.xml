@@ -96,6 +96,7 @@
                 <!--键表示处理器方法执行过程中出现的异常
                 值表示返回的视图，跳转到指定页面-->
                 <prop key="java.lang.NullPointerException">error</prop>
+                <prop key="java.sql.SQLIntegrityConstraintViolationException">error</prop>
             </props>
         </property>
 <!--        将异常信息共享在请求域中-->

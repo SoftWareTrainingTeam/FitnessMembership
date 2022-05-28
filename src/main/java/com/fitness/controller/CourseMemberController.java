@@ -4,8 +4,12 @@ import com.fitness.entity.CourseMember;
 import com.fitness.entity.Result;
 import com.fitness.service.CourseMemberService;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.type.IntegerTypeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Map;
 
 /**
  * @author yao 2022/5/27
@@ -32,12 +36,12 @@ public class CourseMemberController {
     }
 
     @PostMapping(path = "/api/courseMember")
-    public Result<?> insertCourseMember(@RequestBody String courseId, String memberId){
-        return courseMemberService.insertCourseMember(courseId,memberId);
+    public Result<?> insertCourseMember(@RequestBody Map<String, Integer> map){
+        return courseMemberService.insertCourseMember(map.get("courseId"),map.get("memberId"));
     }
 
     @DeleteMapping(path = "/api/courseMember")
-    public Result<?> updateCourseMember(@RequestBody String courseId,String memberId){
-        return courseMemberService.deleteCourseCoach(courseId, memberId);
+    public Result<?> updateCourseMember(@RequestBody Map<String, Integer> map){
+        return courseMemberService.deleteCourseCoach(map.get("courseId"),map.get("memberId"));
     }
 }

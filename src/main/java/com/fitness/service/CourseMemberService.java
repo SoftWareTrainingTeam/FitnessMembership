@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import static com.fitness.entity.Result.OK;
@@ -72,7 +73,7 @@ public class CourseMemberService {
     }
 
     @Transactional
-    public Result<?> insertCourseMember(String courseId, String memberId) {
+    public Result<?> insertCourseMember(int courseId, int memberId) {
         Result<?> result = new Result<>();
         courseMemberMapper.insertCourseMember(courseId, memberId);
         result.setCode(OK);
@@ -81,7 +82,7 @@ public class CourseMemberService {
     }
 
     @Transactional
-    public Result<?> deleteCourseCoach(String courseId, String coachId){
+    public Result<?> deleteCourseCoach(int courseId, int coachId){
         Result<?> result = new Result<>();
         courseMemberMapper.deleteCourseMember(courseId, coachId);
         result.setCode(OK);

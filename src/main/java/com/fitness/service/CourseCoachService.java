@@ -72,7 +72,7 @@ public class CourseCoachService {
     }
 
     @Transactional
-    public Result<?> insertCourseCoach(String courseId, String coachId) {
+    public Result<?> insertCourseCoach(int courseId, int coachId) {
         Result<?> result = new Result<>();
         courseCoachMapper.insertCourseCoach(courseId, coachId);
         result.setCode(OK);
@@ -81,7 +81,7 @@ public class CourseCoachService {
     }
 
     @Transactional
-    public Result<?> deleteCourseCoach(String courseId, String coachId){
+    public Result<?> deleteCourseCoach(int courseId, int coachId){
         Result<?> result = new Result<>();
         courseCoachMapper.deleteCourseCoach(courseId, coachId);
         result.setCode(OK);

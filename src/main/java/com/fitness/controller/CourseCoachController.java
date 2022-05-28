@@ -7,6 +7,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * @author yao 2022/5/27
  */
@@ -32,12 +34,12 @@ public class CourseCoachController {
     }
 
     @PostMapping(path = "/api/courseCoach")
-    public Result<?> insertCourseCoach(@RequestBody String courseId,String coachId){
-        return courseCoachService.insertCourseCoach(courseId, coachId);
+    public Result<?> insertCourseCoach(@RequestBody Map<String,Integer> map){
+        return courseCoachService.insertCourseCoach(map.get("courseId"),map.get("coachId"));
     }
 
     @DeleteMapping(path = "/api/courseCoach")
-    public Result<?> updateCourseCoach(@RequestBody String courseId,String coachId){
-        return courseCoachService.deleteCourseCoach(courseId, coachId);
+    public Result<?> updateCourseCoach(@RequestBody Map<String,Integer> map){
+        return courseCoachService.deleteCourseCoach(map.get("courseId"),map.get("coachId"));
     }
 }

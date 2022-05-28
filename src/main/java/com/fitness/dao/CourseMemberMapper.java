@@ -34,7 +34,7 @@ public interface CourseMemberMapper {
      * @param courseId
      * @param memberId
      */
-    void insertCourseMember(@Param("courseId") String courseId,@Param("memberIId") String memberId);
+    void insertCourseMember(@Param("courseId") int courseId,@Param("memberId") int memberId);
 
     // void updateCourseMember(CourseMember courseMember);
 
@@ -43,5 +43,5 @@ public interface CourseMemberMapper {
      * @param courseId
      * @param memberId
      */
-    void deleteCourseMember(@Param("courseId") String courseId,@Param("memberIId") String memberId);
+    void deleteCourseMember(@Param("courseId") int courseId,@Param("memberId") int memberId);
 }

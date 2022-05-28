@@ -34,7 +34,7 @@ public interface CourseCoachMapper {
      * @param courseId
      * @param coachId
      */
-    void insertCourseCoach(@Param("courseId") String courseId,@Param("coachId") String coachId);
+    void insertCourseCoach(@Param("courseId") int courseId,@Param("coachId") int coachId);
 
     // void updateCourseCoach(CourseCoach courseCoach);
     // 这两个关系表不应该有update方法
@@ -44,5 +44,5 @@ public interface CourseCoachMapper {
      * @param courseId
      * @param coachId
      */
-    void deleteCourseCoach(@Param("courseId") String courseId,@Param("coachId") String coachId);
+    void deleteCourseCoach(@Param("courseId") int courseId,@Param("coachId") int coachId);
 }
