@@ -71,6 +71,7 @@ const EditForm: React.FC<IProps> = (
     <Modal
       getContainer={false}
       visible={visible}
+      width={600}
       title={type ? '编辑教练信息' : '添加教练'}
       maskClosable={false}
       onCancel={() => setVisible(false)}

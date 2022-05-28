@@ -97,12 +97,12 @@ const Category: React.FC = () => {
         columns={columns}
         search={false}
         options={{
-          search: {
-            allowClear: true,
-            style: { width: 300 },
-            placeholder: '输入器材编号',
-            enterButton: <Button type="primary">查询</Button>
-          },
+          // search: {
+          //   allowClear: true,
+          //   style: { width: 300 },
+          //   placeholder: '输入器材编号',
+          //   enterButton: <Button type="primary">查询</Button>
+          // },
           fullScreen: true
         }}
         request={async (param) => {

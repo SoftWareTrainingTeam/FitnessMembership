@@ -40,6 +40,13 @@ const CourseManage: React.FC = () => {
         key: 'capacity',
         dataIndex: 'capacity',
       }, {
+        title: '教练',
+        key: 'courseCoach',
+        dataIndex: 'courseCoach',
+        render: (_, course: Course) => {
+          return course?.courseCoach?.coach?.coachName || '暂未添加教练'
+        }
+      }, {
         title: '开课时间',
         key: 'startTime',
         dataIndex: 'startTime',
@@ -64,6 +71,21 @@ const CourseManage: React.FC = () => {
             >
               编辑
             </Button>,
+            (
+              course.courseCoach?.coach ?
+                <Button
+                  key="add"
+                  type="link"
+                  onClick={() => {
+                    setType(1)
+                    setDefaultValues({ ...course })
+                    setVisible(true)
+                  }}
+                >
+                  添加教练
+                </Button> : null
+            )
+            ,
             <Button
               key="delete"
               type="link"

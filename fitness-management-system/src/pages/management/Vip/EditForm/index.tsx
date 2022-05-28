@@ -75,6 +75,7 @@ const EditForm: React.FC<IProps> = (
   return (
     <Modal
       getContainer={false}
+      width={600}
       visible={visible}
       title={type ? '编辑会员信息' : '注册会员'}
       maskClosable={false}
