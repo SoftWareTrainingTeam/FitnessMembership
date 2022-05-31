@@ -30,6 +30,10 @@
         address like concat('%', #{info}, '%')
     </select>
 
+    <select id="selectIdByTel">
+        select member_id from member where tel_number = #{telNumber}
+    </select>
+
     <!--4. 查询会员数量-->
     <select id="getAllMemberNumber" resultType="java.lang.Integer">
         select count(*)

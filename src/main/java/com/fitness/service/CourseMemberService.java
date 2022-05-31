@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
+import static com.fitness.entity.Result.BAD_REQUEST;
 import static com.fitness.entity.Result.OK;
 
 /**
@@ -75,9 +76,16 @@ public class CourseMemberService {
     @Transactional
     public Result<?> insertCourseMember(int courseId, int memberId) {
         Result<?> result = new Result<>();
-        courseMemberMapper.insertCourseMember(courseId, memberId);
-        result.setCode(OK);
-        result.setMsg("添加 课程-会员关系 成功");
+        // 查一下表里面是不是已经有记录了，有的话返回错误信息
+        CourseMember courseMember= courseMemberMapper.selectOne(courseId, memberId);
+        if (courseMember==null){
+            courseMemberMapper.insertCourseMember(courseId, memberId);
+            result.setCode(OK);
+            result.setMsg("添加 课程-会员关系 成功");
+        }else{
+            result.setCode(BAD_REQUEST);
+            result.setMsg("该 学员 已加入 该 课程");
+        }
         return result;
     }
 

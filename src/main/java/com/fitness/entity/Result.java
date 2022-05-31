@@ -28,6 +28,7 @@ public class Result<T> implements Serializable {
   //认证
   public final static int NOT_ALLOWED = 401;
 
+  public final static int BAD_REQUEST = 400;
 
   //错误
   public final static int ERROR = 500;

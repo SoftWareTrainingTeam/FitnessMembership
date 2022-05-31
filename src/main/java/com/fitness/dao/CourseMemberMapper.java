@@ -30,6 +30,15 @@ public interface CourseMemberMapper {
     List<CourseMember> selectByCourse(String courseKey);
 
     /**
+     * 精确查询表中的记录，为insert服务
+     * 重复则报错
+     * @param courseId
+     * @param memberId
+     * @return
+     */
+    CourseMember selectOne(@Param("courseId") int courseId,@Param("memberId") int memberId);
+
+    /**
      * 新增 课程-会员关系
      * @param courseId
      * @param memberId

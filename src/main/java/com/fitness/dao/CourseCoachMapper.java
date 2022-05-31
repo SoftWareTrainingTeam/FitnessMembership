@@ -29,6 +29,8 @@ public interface CourseCoachMapper {
      */
     List<CourseCoach> selectByCourse(String courseKey);
 
+    CourseCoach selectOne(@Param("courseId") int courseId,@Param("coachId") int coachId);
+
     /**
      * 实体类属性是两个引用，所以这里参数不是对象
      * @param courseId

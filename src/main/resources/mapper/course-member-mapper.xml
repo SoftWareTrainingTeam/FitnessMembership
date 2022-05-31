@@ -44,6 +44,11 @@
           and (course_info.course_id LIKE ('%', #{courseKey}, '%') or course_name LIKE ('%', #{courseKey}, '%'))
     </select>
 
+    <select id="selectOne" resultType="CourseMember">
+        select course_id,member_id from course_member
+where course_id=#{courseId} and member_id=#{memberId}
+    </select>
+
 
     <!--这里的参数就不是对象了，因为对象的属性都是引用-->
     <insert id="insertCourseMember">

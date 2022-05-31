@@ -48,4 +48,6 @@ public class CourseInfo implements Serializable {
   @NotNull(message = "课程容量为空")
   @Digits(integer = 1,fraction = 100,message = "课程容量限于1~100")
   private Integer capacity;
+
+  private CourseCoach courseCoach;
 }

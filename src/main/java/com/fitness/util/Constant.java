@@ -24,4 +24,12 @@ public interface Constant {
      * 密码MD5加密的额外字段
      */
     String PASSWORD_APPEND = "Asd!123e";
+
+    String BEGIN_OF_TEL ="1";
+
+    String BEGIN_OF_MEMBER_CARD ="5";
+
+    int LENGTH_OF_TEL=11;
+
+    int LENGTH_OF_MEMBER_CARD_ID = 10;
 }

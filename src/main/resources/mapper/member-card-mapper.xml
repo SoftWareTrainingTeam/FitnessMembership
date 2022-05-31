@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fitness.dao.MemberCardMapper">
+
+    <sql id="selectField">
+        id,type,times,expire_time,member_id
+    </sql>
+
+    <select id="selectOne" resultType="MemberCard">
+        select <include refid="selectField"/> from member_card
+        WHERE id LIKE CONCAT('%',#{keyword},'%')
+        OR member_id LIKE CONCAT('%',#{keyword},'%')
+    </select>
+
+</mapper>

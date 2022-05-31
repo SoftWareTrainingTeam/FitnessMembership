@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fitness.dao.SignInMapper">
+
+    <select id="selectOne" resultType="SignIn">
+        select id, card_id, date_month, mask, continue_sign_month
+        from sign_in
+        where card_id = #{cardId}
+          and date_month = #{month}
+    </select>
+
+    <insert id="initNewMonth">
+        insert into sign_in (card_id, date_month, mask, continue_sign_month)
+        values (#{cardId}, #{month}, 0, 1)
+    </insert>
+
+    <update id="updateMask">
+        update sign_in
+        set maak = #{mask}
+        where card_id = #{cardId}
+          and date_month = #{month}
+    </update>
+</mapper>

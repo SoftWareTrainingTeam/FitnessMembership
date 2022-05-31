@@ -23,5 +23,8 @@
         <typeAlias type="com.fitness.entity.CourseInfo" alias="CourseInfo"/>
         <typeAlias type="com.fitness.entity.CourseCoach" alias="CourseCoach"/>
         <typeAlias type="com.fitness.entity.CourseMember" alias="CourseMember"/>
+
+        <typeAlias type="com.fitness.entity.MemberCard" alias="MemberCard"/>
+        <typeAlias type="com.fitness.entity.SignIn" alias="SignIn"/>
     </typeAliases>
 </configuration>

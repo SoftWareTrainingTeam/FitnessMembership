@@ -64,4 +64,11 @@ public interface MemberMapper {
    * @param members 会员集合
    */
   void insertMembersByBatch(List<Member> members);
+
+  /**
+   * 通过电话号码查会员id
+   * @param telNumber
+   * @return
+   */
+  int selectIdByTel(String telNumber);
 }

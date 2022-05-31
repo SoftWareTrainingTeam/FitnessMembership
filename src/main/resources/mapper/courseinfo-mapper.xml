@@ -22,8 +22,33 @@
     </select>
 
     <!--2. 查询所有课程信息-->
-    <select id="getAllCourseInfo" resultType="com.fitness.entity.CourseInfo">
-        <include refid="baseQuery"/>
+    <resultMap id="course_coach2" type="com.fitness.entity.CourseInfo">
+        <id property="courseId" column="course_id"/>
+        <result property="courseName" column="course_name"/>
+        <result property="description" column="description"/>
+        <result property="startTime" column="start_time"/>
+        <result property="frequency" column="frequency"/>
+        <result property="price" column="price"/>
+        <result property="capacity" column="capacity"/>
+        <association property="courseCoach" javaType="CourseCoach">
+            <association property="coach" javaType="Coach">
+                <id property="coachId" column="coach_id"/>
+                <result property="coachName" column="coach_name"/>
+            </association>
+        </association>
+    </resultMap>
+    <select id="getAllCourseInfo" resultMap="course_coach2">
+        select course_info.course_id,
+               course_name,
+               description,
+               start_time,
+               frequency,
+               price,
+               capacity,
+               coach.coach_id,
+               coach_name
+        from course_info,coach,course_coach
+where course_info.course_id = course_coach.course_id and course_coach.coach_id=coach.coach_id
     </select>
 
     <!--3. 根据课程名字模糊查询信息-->

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.fitness.entity.Result.BAD_REQUEST;
 import static com.fitness.entity.Result.OK;
 
 /**
@@ -83,9 +84,16 @@ public class CourseCoachService {
     @Transactional
     public Result<?> deleteCourseCoach(int courseId, int coachId){
         Result<?> result = new Result<>();
-        courseCoachMapper.deleteCourseCoach(courseId, coachId);
-        result.setCode(OK);
-        result.setMsg("删除 课程-教练关系 成功");
+        CourseCoach courseCoach = courseCoachMapper.selectOne(courseId, coachId);
+        if(courseCoach==null){
+            courseCoachMapper.deleteCourseCoach(courseId, coachId);
+            result.setCode(OK);
+            result.setMsg("删除 课程-教练关系 成功");
+        }else{
+            result.setCode(BAD_REQUEST);
+            result.setMsg("该 教练 已任职 该 课程");
+        }
+
         return result;
     }
 }

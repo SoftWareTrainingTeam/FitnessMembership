@@ -53,6 +53,12 @@ and (coach.coach_id LIKE ('%',#{coachKey},'%') or coach_name LIKE ('%',#{coachKe
           and (course_info.course_id LIKE ('%',#{courseKey},'%') or course_name LIKE ('%',#{courseKey},'%'))
     </select>
 
+    <select id="selectOne" resultType="CourseCoach">
+        select course_id,coach_id
+form course_coach
+        where course_id = #{courseId} and coach_id = #{coachId}
+    </select>
+
     <!--这里的参数就不是对象了，因为对象的属性都是引用-->
     <insert id="insertCourseCoach">
         insert into course_coach(course_id, coach_id)
