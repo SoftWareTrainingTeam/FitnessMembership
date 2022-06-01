@@ -9,10 +9,15 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MemberCardMapper {
 
+    MemberCard selectByMemberId(String memberId);
+
+    MemberCard selectByCardId(String cardIl);
+
+
+
     /**
-     * 根据关键字查询健身卡
-     * @param keyword 用户id/会员卡号
-     * @return
+     * 更新会员健身卡
+     * @param memberCard
      */
-    MemberCard selectOne(String keyword);
+    void updateMemberCard(MemberCard memberCard);
 }

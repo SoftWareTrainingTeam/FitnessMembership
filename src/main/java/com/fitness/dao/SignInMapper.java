@@ -2,6 +2,7 @@ package com.fitness.dao;
 
 import com.fitness.entity.SignIn;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author yao 2022/6/1
@@ -14,7 +15,7 @@ public interface SignInMapper {
      * @param cardId 健身卡号
      * @param month 月份
      */
-    void initNewMonth(String cardId,String month);
+    void initNewMonth(@Param("cardId") String cardId, @Param("month") String month);
 
     /**
      * 检索一条记录
@@ -22,12 +23,12 @@ public interface SignInMapper {
      * @param cardId
      * @return
      */
-    SignIn selectOne(String cardId,String month);
+    SignIn selectOne(@Param("cardId") String cardId,@Param("month") String month);
 
     /**
      * 更新某一用户某月的签到信息
      * @param cardId
      * @param month
      */
-    void updateMask(String cardId,String month,int mask);
+    void updateMask(@Param("cardId") String cardId,@Param("month") String month,@Param("mask") int mask);
 }

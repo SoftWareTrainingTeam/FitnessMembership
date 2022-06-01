@@ -32,4 +32,9 @@ public interface Constant {
     int LENGTH_OF_TEL=11;
 
     int LENGTH_OF_MEMBER_CARD_ID = 10;
+
+    /**
+     * 时间段类型的健身卡
+     */
+    int AGING_TYPE_CARD = -1;
 }

@@ -18,7 +18,7 @@
 
     <update id="updateMask">
         update sign_in
-        set maak = #{mask}
+        set mask = #{mask}
         where card_id = #{cardId}
           and date_month = #{month}
     </update>

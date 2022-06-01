@@ -24,5 +24,6 @@ public class MemberCard {
 
     private Date expireTime;
 
-    private Member member;
+    // private Member member;
+    private int memberId;
 }

@@ -70,5 +70,5 @@ public interface MemberMapper {
    * @param telNumber
    * @return
    */
-  int selectIdByTel(String telNumber);
+  String selectIdByTel(String telNumber);
 }

@@ -30,7 +30,7 @@
         address like concat('%', #{info}, '%')
     </select>
 
-    <select id="selectIdByTel">
+    <select id="selectIdByTel" resultType="java.lang.String">
         select member_id from member where tel_number = #{telNumber}
     </select>
 

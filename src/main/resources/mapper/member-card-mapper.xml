@@ -8,10 +8,19 @@
         id,type,times,expire_time,member_id
     </sql>
 
-    <select id="selectOne" resultType="MemberCard">
+    <select id="selectByMemberId" resultType="MemberCard">
+        select <include refid="selectField"/> from member_card
+        WHERE member_id LIKE CONCAT('%',#{keyword},'%')
+    </select>
+
+    <select id="selectByCardId" resultType="MemberCard">
         select <include refid="selectField"/> from member_card
         WHERE id LIKE CONCAT('%',#{keyword},'%')
-        OR member_id LIKE CONCAT('%',#{keyword},'%')
     </select>
+
+    <update id="updateMemberCard" parameterType="com.fitness.entity.MemberCard">
+        update member_card
+set times = #{times}
+    </update>
 
 </mapper>

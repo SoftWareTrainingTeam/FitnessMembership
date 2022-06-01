@@ -1,6 +1,8 @@
 package com.fitness.util;
 
 import org.springframework.util.DigestUtils;
+
+import java.util.Calendar;
 import java.util.UUID;
 
 /**
@@ -39,15 +41,14 @@ public class Util {
         mask = mask | (1<<date-1);
         return mask;
     }
-    public static void get(){
-        int a = 66696;
-        // 解密算法
-        for(int j=0;j<=31;++j){
-            // 关键就是判断a&(1<<j)的值是否大于0
-            int temp = a&(1<<j);
-            if(temp>0){
-                System.out.println("第"+(j+1)+"天签到了");
-            }
+    public static boolean signInOrNot(int mask){
+        Calendar calendar = Calendar.getInstance();
+        int temp = calendar.get(Calendar.DATE)-1;
+
+        temp = mask&(1<<temp);
+        if (temp>0){
+            return true;
         }
+        return  false;
     }
 }

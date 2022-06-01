@@ -16,7 +16,8 @@ public class SignIn {
 
     private int id;
 
-    MemberCard memberCard;
+    // MemberCard memberCard;
+    private String cardId;
 
     private String dateMonth;
 
