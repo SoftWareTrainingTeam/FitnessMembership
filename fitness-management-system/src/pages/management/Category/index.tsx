@@ -3,7 +3,7 @@ import ProTable, { ActionType, ProColumnType } from '@ant-design/pro-table'
 import { Button, Modal, message } from 'antd'
 import type { EquipCate } from '@/services/typings'
 import { PlusOutlined } from '@ant-design/icons'
-import { deleteEquipCate, getEquipCateList } from '@/services/category'
+import { deleteEquipCate, getEquipCateList, selectEquipType } from '@/services/category'
 import EditForm from './EditForm'
 const Category: React.FC = () => {
   const [visible, setVisible] = useState(false)
@@ -12,6 +12,11 @@ const Category: React.FC = () => {
   const actionRef = useRef<ActionType>()
   const columns: ProColumnType<EquipCate>[] = useMemo(() => {
     return [
+      {
+        title: '序号',
+        dataIndex: 'index',
+        valueType: 'indexBorder',
+      },
       {
         title: '分类名称',
         key: 'type',
@@ -97,12 +102,12 @@ const Category: React.FC = () => {
         columns={columns}
         search={false}
         options={{
-          // search: {
-          //   allowClear: true,
-          //   style: { width: 300 },
-          //   placeholder: '输入器材编号',
-          //   enterButton: <Button type="primary">查询</Button>
-          // },
+          search: {
+            allowClear: true,
+            style: { width: 300 },
+            placeholder: '支持分类名称，厂家，产品号',
+            enterButton: <Button type="primary">查询</Button>
+          },
           fullScreen: true
         }}
         request={async (param) => {
@@ -112,7 +117,13 @@ const Category: React.FC = () => {
             data: {
               list,
               total
-            } } = await getEquipCateList({
+            } } = param.keyword
+            ? await selectEquipType({
+              keyword: param.keyword,
+              offset: param.current!,
+              limit: param.pageSize!
+            })
+            : await getEquipCateList({
               offset: param.current!,
               limit: param.pageSize!
             })

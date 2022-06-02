@@ -12,6 +12,17 @@ export function getEquipList(body: { offset: number, limit: number }) {
     params: body
   })
 }
+export function selectEquip(body: { keyword?: string, offset: number, limit: number }) {
+  return request<
+    ResponseResult<{
+      total: number,
+      list: Equip[]
+    }>
+  >('/api/selectEquip', {
+    method: 'GET',
+    restful: body
+  })
+}
 export function addEquip(body: Equip) {
   return request<
   ResponseResult

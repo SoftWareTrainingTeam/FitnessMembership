@@ -24,7 +24,14 @@ const EquipDetail: React.FC<
         destroyOnClose
         onClose={() => setEquip(null)}
         maskClosable={false}
-        footer={<Button type="primary" onClick={() => setEquip(null)}>退出</Button>}
+        footer={<Button
+          type="primary"
+          shape="round"
+          style={{marginLeft: 24, width: 100}}
+          onClick={() => setEquip(null)}
+        >
+          退出
+        </Button>}
       >
         <ul className={styles.list}>
           <li>器材名称：{equip?.label}</li>
@@ -32,10 +39,10 @@ const EquipDetail: React.FC<
             器材状态：
             {
               equip?.available === 0
-                ? '不可用' 
+                ? '不可用'
                 : equip?.available === 1
-                ? '正常' : '维修中'
-              
+                  ? '正常' : '维修中'
+
             }
           </li>
           <li>分类：{equip?.equipType?.type}</li>

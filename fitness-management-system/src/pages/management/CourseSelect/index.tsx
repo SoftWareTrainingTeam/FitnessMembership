@@ -3,7 +3,7 @@ import ProTable, { ActionType, ProColumnType } from '@ant-design/pro-table'
 import { Button, Modal, message } from 'antd'
 import type { Coach, Course, CourseInfo, Vip } from '@/services/typings'
 import dayjs from '@/utils/dayjs'
-import { deleteCourse, getCourseList } from '@/services/course'
+import { deleteCourse } from '@/services/course'
 import { dropCourse, getCourseInfoList } from '@/services/courseSelection'
 import AddModal from './AddModal'
 
@@ -34,6 +34,11 @@ const CourseManage: React.FC = () => {
   const [courseId, setCourseId] = useState<string>('')
   const columns: ProColumnType<CourseDetail>[] = useMemo(() => {
     return [
+      {
+        title: '序号',
+        dataIndex: 'index',
+        valueType: 'indexBorder',
+      },
       {
         title: '课程编号',
         key: 'courseId',
@@ -90,14 +95,6 @@ const CourseManage: React.FC = () => {
               }}
             >
               添加学员
-            </Button>,
-            <Button
-              key="delete"
-              type="link"
-              danger
-              onClick={() => handleDelete(course.courseId)}
-            >
-              下架
             </Button>
           ]
         }

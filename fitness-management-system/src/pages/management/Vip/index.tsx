@@ -16,6 +16,11 @@ const VipMember: React.FC = () => {
   const columns: ProColumnType<Vip>[] = useMemo(() => {
     return [
       {
+        title: '序号',
+        dataIndex: 'index',
+        valueType: 'indexBorder',
+      },
+      {
         title: '会员姓名',
         key: 'name',
         dataIndex: 'name'
@@ -60,15 +65,15 @@ const VipMember: React.FC = () => {
             >
               编辑
             </Button>,
-            <Button
-              key="recharge"
-              type="link"
-              onClick={() => {
-                setIsRecharge(true)
-              }}
-            >
-              充值
-            </Button>,
+            // <Button
+            //   key="recharge"
+            //   type="link"
+            //   onClick={() => {
+            //     setIsRecharge(true)
+            //   }}
+            // >
+            //   充值
+            // </Button>,
             <Button
               key="delete"
               type="link"

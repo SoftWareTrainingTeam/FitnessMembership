@@ -14,6 +14,11 @@ const CourseManage: React.FC = () => {
   const columns: ProColumnType<Course>[] = useMemo(() => {
     return [
       {
+        title: '序号',
+        dataIndex: 'index',
+        valueType: 'indexBorder',
+      },
+      {
         title: '课程编号',
         key: 'courseId',
         dataIndex: 'courseId'
@@ -71,20 +76,18 @@ const CourseManage: React.FC = () => {
             >
               编辑
             </Button>,
-            (
-              course.courseCoach?.coach ?
-                <Button
-                  key="add"
-                  type="link"
-                  onClick={() => {
-                    setType(1)
-                    setDefaultValues({ ...course })
-                    setVisible(true)
-                  }}
-                >
-                  添加教练
-                </Button> : null
-            )
+            <Button
+              key="add"
+              type="link"
+              disabled={!!course.courseCoach?.coach}
+              onClick={() => {
+                setType(1)
+                setDefaultValues({ ...course })
+                setVisible(true)
+              }}
+            >
+              添加教练
+            </Button>
             ,
             <Button
               key="delete"

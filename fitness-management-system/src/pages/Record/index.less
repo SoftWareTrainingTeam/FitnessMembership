@@ -3,23 +3,33 @@
   max-width: 800px;
   margin: 0 auto;
   background: #fff;
-  &:hover {
-    box-shadow: 6px 0 12px -8px #ddd,
-                -10px 0 18px -8px #ddd,
-                0 -2px 12px -8px #ddd,
-                0 15px 12px -8px #ddd;
-    transition: all .3s linear;
-  }
+  box-shadow: 6px 0 12px -8px #ddd,
+    -10px 0 18px -8px #ddd,
+    0 -2px 12px -8px #ddd,
+    0 15px 12px -8px #ddd;
+  transition: all .3s linear;
+
   .head {
+    position: relative;
     height: 48px;
     line-height: 48px;
     padding: 0 24px;
     display: flex;
+    justify-content: flex-start;
+
     span {
       margin-left: 12px;
       font-size: 16px;
     }
+
+    .search {
+      position: absolute;
+      right: 24px;
+      background: #fff;
+      z-index: 100;
+    }
   }
+
   .weeklist,
   .daylist {
     padding: 12px;
@@ -48,7 +58,7 @@
       position: relative;
       flex: 0 0 14.2%;
       height: 48px;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -70,6 +80,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    box-shadow: 0 6px 6px -2px #ccc;
   }
 
   .sign {

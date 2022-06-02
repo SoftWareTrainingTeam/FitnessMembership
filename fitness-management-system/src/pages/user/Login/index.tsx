@@ -3,10 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ProFormText, LoginForm, ProFormCaptcha } from '@ant-design/pro-form';
 import { history } from 'umi';
 import Footer from '@/components/Footer';
-import { UserOutlined, LockOutlined, SafetyOutlined } from '@ant-design/icons';
 import { getCaptcha, login } from '@/services/user';
 import type { LoginParams } from '@/services/typings';
 import styles from './index.less';
+
 const Login: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const [cpatchaUrl, setCaptchaUrl] = useState('')
@@ -143,13 +143,30 @@ const Login: React.FC = () => {
       <canvas ref={canvasRef}></canvas>
       <div className={styles.container}>
         <div className={styles.content}>
+          <div className={styles.video}>
+            <video
+              style={{
+                position: 'absolute',
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                left: 0,
+                top: -15,
+                objectFit: 'contain',
+              }}
+              src="https://apd-d5cd06f5a42743be12ec5418bc9c36f4.v.smtcdns.com/om.tc.qq.com/AWHGOHlLK5j42-3kecVLSkjkUeUuh3sEeihsmS77JlxY/uwMROfz2r57IIaQXGdGnC2deB3DpcJF7aQl7reSXOBYDMxyJ/svp_50001/szg_87783836_50001_a2f737f9487d47e69ffb9510e67562d9.f632.mp4?sdtfrom=v1010&guid=db57ca6837dc3c8232daf7bd04ec8c8d&vkey=8C4D8C23DC0AB096223039C1EB946378CDEA2CBA7113700A118072FAB613719A1BBA107AD26A8A2CBF4AF34E8D2277A8FF43A84F84E8B02843FFB26A2FCAA83F650EE2ED086B2351267BEC4612EE0955D85C67866620B9A3D3D6C90DF0116AFF5B5BDF76053B9C0E52937C055905C0F2CF12C8A0106E59B019220D66E8BB05875442D48839B3CD61"
+              loop
+              muted
+              autoPlay
+            >
+
+            </video>
+          </div>
           <div className={styles.left}>
-            WELCOME
+            <span>WELCOME</span>
           </div>
           <div className={styles.right}>
             <LoginForm
-              // logo={<img alt="logo" src="/logo.svg" />}
-              title="登 录"
               isKeyPressSubmit
               subTitle={<Divider />}
               onFinish={handleSubmit}
@@ -157,10 +174,14 @@ const Login: React.FC = () => {
                 submitButtonProps: {
                   shape: 'round',
                   size: 'large',
+                  type: 'default',
                   style: {
                     width: 120,
                     marginTop: 24
                   }
+                },
+                searchConfig: {
+                  submitText: 'Sign in'
                 }
               }}
             >

@@ -32,10 +32,7 @@ const errorHandler = (error: { response: Response }): Response => {
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
-    notification.error({
-      message: `请求出错 ${status}: ${url}`,
-      description: errorText,
-    });
+    console.log(`请求出错 ${status}: ${url}`, errorText)
   } else if (!response) {
     notification.error({
       message: '您的网络发生异常，无法连接服务器',
