@@ -14,6 +14,11 @@ const CoachManage: React.FC = () => {
   const columns: ProColumnType<Coach>[] = useMemo(() => {
     return [
       {
+        title: '序号',
+        dataIndex: 'index',
+        valueType: 'indexBorder',
+      },
+      {
         title: '教练编号',
         key: 'coachId',
         dataIndex: 'coachId'

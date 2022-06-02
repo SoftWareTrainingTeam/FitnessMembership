@@ -13,8 +13,9 @@ import { Access } from '@@/plugin-access/access';
 import RightContent from '@/components/RightContent';
 import { menuList, Menu } from '../../config/menuList'
 import defaultSettings from '../../config/defaultSettings';
-import './index.less'
 import Footer from '@/components/Footer';
+import './index.less'
+import logo from '../../public/logo.png'
 
 export type BasicLayoutProps = {
   breadcrumbNameMap: Record<string, MenuDataItem>;
@@ -79,6 +80,7 @@ const AdminLayout: React.FC<BasicLayoutProps> = (props) => {
       <ProLayout
         {...props}
         {...defaultSettings}
+        logo={logo}
         layout="mix"
         fixSiderbar
         route={{

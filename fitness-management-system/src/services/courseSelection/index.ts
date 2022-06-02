@@ -13,12 +13,14 @@ export function getCourseInfoList(param: { startPage?: number, pageSize?: number
   })
 }
 
-export function dropCourse(memberId: string) {
+// 课程退选
+export function dropCourse(courseId: string, memberId: string) {
   return request<
   ResponseResult
-  >('/api/course', {
+  >('/api/courseMember', {
     method: 'DELETE',
-    restful: {
+    data: {
+      courseId,
       memberId
     }
   })

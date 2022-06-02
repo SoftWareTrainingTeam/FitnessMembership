@@ -26,7 +26,7 @@
         routes: [
           {
             path: '/op',
-            redirect: '/op/analysis'
+            redirect: '/op/management'
           },
           {
             path: '/op/analysis',
@@ -56,21 +56,12 @@
           },
           // 会员签到
           {
-            path: 'members',
-            routes: [
-              {
-                path: './',
-                redirect: './sign-in',
-              },
-              {
-                path: './sign-in',
-                component: './Test'
-              },
-              {
-                path: './record',
-                component: './Record'
-              }
-            ]
+              path: './members',
+              redirect: './members/sign-in',
+          },
+          {
+            path: './members/sign-in',
+            component: './Record'
           },
           // 会员，教练，课程管理，选课
           {

@@ -52,3 +52,15 @@ export function deleteCourse(id: string) {
     }
   })
 }
+
+export function addMemberToCourse(courseId: string, memberId: string) {
+  return request<
+    ResponseResult
+  >('/api/courseMember', {
+    method: 'POST',
+    data: {
+      courseId,
+      memberId
+    }
+  })
+}

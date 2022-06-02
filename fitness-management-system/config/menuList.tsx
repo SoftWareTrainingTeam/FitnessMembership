@@ -2,9 +2,7 @@ import {
   TeamOutlined,
   ContactsOutlined,
   ClusterOutlined,
-  FormOutlined,
   FieldTimeOutlined,
-  BarChartOutlined,
   KeyOutlined,
   ProfileOutlined,
   IdcardOutlined,
@@ -15,7 +13,8 @@ import {
   AuditOutlined,
   RedEnvelopeOutlined,
   DashboardOutlined,
-  UnorderedListOutlined
+  UnorderedListOutlined,
+  ProjectOutlined
 } from "@ant-design/icons";
 
 export type Menu = {
@@ -48,23 +47,6 @@ export const menuList: Menu[] = [
     ]
   },
   {
-    path: '/op/members',
-    name: '会员签到',
-    icon: <FormOutlined />,
-    routes: [
-      {
-        path: '/op/members/sign-in',
-        name: '签到',
-        icon: <FieldTimeOutlined />
-      },
-      {
-        path: '/op/members/record',
-        name: '签到统计',
-        icon: <BarChartOutlined />
-      }
-    ]
-  },
-  {
     path: '/op/management',
     name: '信息管理',
     icon: <ProfileOutlined />,
@@ -87,9 +69,14 @@ export const menuList: Menu[] = [
       {
         path: '/op/management/course-select',
         name: '选课信息',
-        icon: <PieChartOutlined />
+        icon: <ProjectOutlined />
       }
     ]
+  },
+  {
+    path: '/op/members/sign-in',
+    name: '会员签到',
+    icon: <FieldTimeOutlined />
   },
   {
     path: '/op/category',

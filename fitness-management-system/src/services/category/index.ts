@@ -12,6 +12,17 @@ export function getEquipCateList(body: {offset: number, limit: number}) {
       params: body
     })
 }
+export function selectEquipType(body: { keyword?: string, offset: number, limit: number }) {
+  return request<
+    ResponseResult<{
+      total: number,
+      list: EquipCate[]
+    }>
+  >('/api/selectType', {
+    method: 'GET',
+    restful: body
+  })
+}
 export function getAllEquipCateList() {
   return request<
     ResponseResult<{

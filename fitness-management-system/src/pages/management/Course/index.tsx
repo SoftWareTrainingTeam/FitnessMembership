@@ -14,6 +14,11 @@ const CourseManage: React.FC = () => {
   const columns: ProColumnType<Course>[] = useMemo(() => {
     return [
       {
+        title: '序号',
+        dataIndex: 'index',
+        valueType: 'indexBorder',
+      },
+      {
         title: '课程编号',
         key: 'courseId',
         dataIndex: 'courseId'
@@ -40,6 +45,13 @@ const CourseManage: React.FC = () => {
         key: 'capacity',
         dataIndex: 'capacity',
       }, {
+        title: '教练',
+        key: 'courseCoach',
+        dataIndex: 'courseCoach',
+        render: (_, course: Course) => {
+          return course?.courseCoach?.coach?.coachName || '暂未添加教练'
+        }
+      }, {
         title: '开课时间',
         key: 'startTime',
         dataIndex: 'startTime',
@@ -64,6 +76,19 @@ const CourseManage: React.FC = () => {
             >
               编辑
             </Button>,
+            <Button
+              key="add"
+              type="link"
+              disabled={!!course.courseCoach?.coach}
+              onClick={() => {
+                setType(1)
+                setDefaultValues({ ...course })
+                setVisible(true)
+              }}
+            >
+              添加教练
+            </Button>
+            ,
             <Button
               key="delete"
               type="link"

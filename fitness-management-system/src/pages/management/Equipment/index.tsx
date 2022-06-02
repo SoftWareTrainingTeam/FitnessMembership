@@ -3,7 +3,7 @@ import ProTable, { ActionType, ProColumnType } from '@ant-design/pro-table'
 import { Button, Modal, message } from 'antd'
 import type { Equip } from '@/services/typings'
 import { PlusOutlined } from '@ant-design/icons'
-import { deleteEquip, getEquipList } from '@/services/equip'
+import { deleteEquip, getEquipList, selectEquip } from '@/services/equip'
 import dayjs from '@/utils/dayjs'
 import EquipDetail from './components/EquipDetail'
 import EditForm from './components/EditForm'
@@ -15,6 +15,11 @@ const Equipment: React.FC = () => {
   const actionRef = useRef<ActionType>()
   const columns: ProColumnType<Equip>[] = useMemo(() => {
     return [
+      {
+        title: '序号',
+        dataIndex: 'index',
+        valueType: 'indexBorder',
+      },
       {
         title: '器材编号',
         key: 'equipId',
@@ -120,12 +125,12 @@ const Equipment: React.FC = () => {
         columns={columns}
         search={false}
         options={{
-          // search: {
-          //   allowClear: true,
-          //   style: { width: 300 },
-          //   placeholder: '按器材编号查询',
-          //   enterButton: <Button type="primary">查询</Button>
-          // },
+          search: {
+            allowClear: true,
+            style: { width: 300 },
+            placeholder: '输入名称',
+            enterButton: <Button type="primary">查询</Button>
+          },
           fullScreen: true
         }}
         request={async (param) => {
@@ -135,10 +140,16 @@ const Equipment: React.FC = () => {
             data: {
               list,
               total
-            } } = await getEquipList({
-              offset: param.current!,
+            } } = param.keyword 
+            ? await selectEquip({
+              keyword: param.keyword, 
+              offset: param.current!, 
               limit: param.pageSize!
             })
+            : await getEquipList({
+              offset: param.current!,
+              limit: param.pageSize!
+            }) 
           return {
             data: list,
             total: total,

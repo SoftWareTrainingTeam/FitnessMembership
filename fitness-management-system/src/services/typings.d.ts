@@ -69,7 +69,8 @@ export type Course = {
   startTime:  string | Moment,
   frequency: string,
   price: number,
-  capacity: number
+  capacity: number,
+  courseCoach: {coach: Coach}
 }
 
 export type CourseInfo = {

@@ -3,10 +3,9 @@ import ProTable, { ActionType, ProColumnType } from '@ant-design/pro-table'
 import { Button, Modal, message } from 'antd'
 import type { Coach, Course, CourseInfo, Vip } from '@/services/typings'
 import dayjs from '@/utils/dayjs'
-import { PlusOutlined } from '@ant-design/icons'
-import { deleteCourse, getCourseList } from '@/services/course'
+import { deleteCourse } from '@/services/course'
 import { dropCourse, getCourseInfoList } from '@/services/courseSelection'
-// import EditForm from './EditForm'
+import AddModal from './AddModal'
 
 export type CourseDetail = { members: Vip[], coach: Coach } & Course
 // 处理后端数据
@@ -30,12 +29,16 @@ const arrayToTree = (arrs: CourseInfo[]): CourseDetail[] => {
   return result;
 }
 const CourseManage: React.FC = () => {
-  const [visible, setVisible] = useState(false)
-  const [type, setType] = useState<0 | 1>(0)   //0添加， 1修改
-  const [defaultValues, setDefaultValues] = useState<CourseDetail | null>(null)
   const actionRef = useRef<ActionType>()
+  const [visible, setVisible] = useState(false)
+  const [courseId, setCourseId] = useState<string>('')
   const columns: ProColumnType<CourseDetail>[] = useMemo(() => {
     return [
+      {
+        title: '序号',
+        dataIndex: 'index',
+        valueType: 'indexBorder',
+      },
       {
         title: '课程编号',
         key: 'courseId',
@@ -55,11 +58,11 @@ const CourseManage: React.FC = () => {
         key: 'frequency',
         dataIndex: 'frequency',
       }, {
-        title: '报名人数',
+        title: '报名人数 / 容量',
         key: 'members',
         dataIndex: 'members',
         render: (_, course: CourseDetail) => {
-          return course.members.length
+          return `${course.members.length} / ${course.capacity}`
         }
       }, {
         title: '教练',
@@ -81,28 +84,17 @@ const CourseManage: React.FC = () => {
         key: 'memberId',
         width: '20%',
         align: 'center',
-        render: (_,) => {
+        render: (_, course: CourseDetail) => {
           return [
             <Button
-              key="edit"
+              key="add"
               type="link"
               onClick={() => {
-                setType(1)
-                // setDefaultValues({ ...course })
+                setCourseId(course.courseId)
                 setVisible(true)
               }}
             >
-              编辑
-            </Button>,
-            <Button
-              key="delete"
-              type="link"
-              danger
-            // onClick={() => {
-            //   handleDelete(course.courseId)
-            // }}
-            >
-              删除
+              添加学员
             </Button>
           ]
         }
@@ -145,7 +137,11 @@ const CourseManage: React.FC = () => {
         search={false}
         expandable={{
           expandedRowRender: (record: CourseDetail) => {
-            return <ExpandedRow actionRef={actionRef} dataSourse={record.members}/>
+            return <ExpandedRow
+              actionRef={actionRef}
+              dataSourse={record.members}
+              courseId={record.courseId}
+            />
           },
         }}
         options={{
@@ -172,109 +168,94 @@ const CourseManage: React.FC = () => {
         }}
         pagination={{
           showQuickJumper: true,
-          showSizeChanger: true,
-          pageSizeOptions: [5, 10, 15, 20],
-          defaultPageSize: 5,
+          defaultPageSize: 50,
           showTotal: (total, range) => {
             return `总共${total}条`
           },
         }}
-        toolBarRender={() => [
-          <Button
-            key="button"
-            icon={<PlusOutlined />}
-            type="primary"
-            onClick={() => {
-              setType(0)
-              setDefaultValues(null)
-              setVisible(true)
-            }}
-          >
-            选课
-          </Button>,
-        ]}
       />
-      {/* <EditForm
-        type={type}
-        visible={visible}
+      <AddModal
         actionRef={actionRef}
+        courseId={courseId}
+        visible={visible}
         setVisible={setVisible}
-        defaultValues={defaultValues}
-      /> */}
+      />
     </>
   )
 }
 // 报名会员列表
 const ExpandedRow: React.FC<{
   actionRef: React.MutableRefObject<ActionType | undefined>,
-  dataSourse: Vip[]
+  dataSourse: Vip[],
+  courseId: string
 }> = ({
   actionRef,
-  dataSourse
-}) =>{
-  // 退选课程
-  const handelDropCourse = async (memberId: string) => {
-    try {
-      const { code } = await dropCourse(memberId)
-      if (code === 200) {
-        message.success('退选成功!')
-        actionRef.current?.reload()
-        return
-      }
-    } catch {
-      message.error('退选失败!请重试')
-    }
-  }
-  return (
-    <ProTable<Vip>
-      rowKey="memberId"
-      columns={[
-        {
-          title: '会员账号',
-          key: 'memberId',
-          dataIndex: 'memberId'
-        },
-        {
-          title: '会员姓名',
-          key: 'name',
-          dataIndex: 'name'
-        }, {
-          title: '性别',
-          key: 'sex',
-          dataIndex: 'sex',
-        }, {
-          title: '住址',
-          key: 'address',
-          dataIndex: 'address',
-        }, {
-          title: '联系电话',
-          key: 'telNumber',
-          dataIndex: 'telNumber',
-        }, {
-          title: '操做',
-          key: 'memberId',
-          dataIndex: 'memberId',
-          render: (_, vip: Vip) => {
-            return [
-              <Button
-                key="drop"
-                type="primary"
-                size="small"
-                danger
-                onClick={() => handelDropCourse(vip.memberId)}
-              >
-                退选
-              </Button>
-            ]
-          }
+  dataSourse,
+  courseId
+}) => {
+    // 退选课程
+    const handelDropCourse = async (memberId: string) => {
+      try {
+        const { code } = await dropCourse(courseId, memberId)
+        if (code === 200) {
+          message.success('退选成功!')
+          actionRef.current?.reload()
+          return
         }
-      ]}
-      headerTitle={false}
-      search={false}
-      options={false}
-      dataSource={dataSourse}
-      pagination={false}
-    />
-  );
-};
+      } catch {
+        message.error('退选失败!请重试')
+      }
+    }
+    return (
+      <ProTable<Vip>
+        rowKey="memberId"
+        columns={[
+          {
+            title: '会员账号',
+            key: 'memberId',
+            dataIndex: 'memberId'
+          },
+          {
+            title: '会员姓名',
+            key: 'name',
+            dataIndex: 'name'
+          }, {
+            title: '性别',
+            key: 'sex',
+            dataIndex: 'sex',
+          }, {
+            title: '住址',
+            key: 'address',
+            dataIndex: 'address',
+          }, {
+            title: '联系电话',
+            key: 'telNumber',
+            dataIndex: 'telNumber',
+          }, {
+            title: '操做',
+            key: 'memberId',
+            dataIndex: 'memberId',
+            render: (_, vip: Vip) => {
+              return [
+                <Button
+                  key="drop"
+                  type="primary"
+                  size="small"
+                  danger
+                  onClick={() => handelDropCourse(vip.memberId)}
+                >
+                  退选
+                </Button>
+              ]
+            }
+          }
+        ]}
+        headerTitle={false}
+        search={false}
+        options={false}
+        dataSource={dataSourse}
+        pagination={false}
+      />
+    );
+  };
 export default CourseManage
