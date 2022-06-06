@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author yao 2022/5/29
@@ -128,8 +126,9 @@ public class SignInService implements Constant {
         return result;
     }
 
-    public Result<?> getCalender(String identityCode) {
-        Result<?> result = new Result<>();
+    @Transactional
+    public Result<Map<String,Integer>> getCalender(String identityCode,String yearMonth) {
+        Result<Map<String,Integer>> result = new Result<>();
         MemberCard memberCard;
         // 匹配电话号码/会员卡号
         // 传入字符以1打头，那么假设它是手机号码
@@ -172,6 +171,20 @@ public class SignInService implements Constant {
             result.setMsg("请检查输入 应为 会员电话号码/会员卡号");
             return result;
         }
+        // 检查yearMonth，必须是2022_6的形式
+        SignIn signIn = signInMapper.selectOne(memberCard.getId(),yearMonth);
+        if (signIn==null){
+            result.setCode(Result.ERROR);
+            result.setMsg("未查询到 该用户 该月 的登录信息");
+            return result;
+        }
+        Map<String,Integer> map = new HashMap<>();
+        map.put("calender", signIn.getMask());
+
+        result.setCode(Result.OK);
+        result.setMsg("查询用户登录日历成功");
+        result.setData(map);
+
         return result;
     }
 

@@ -53,7 +53,7 @@ public class UserService implements Constant {
         }
 
         // 注册用户
-        // 这里多加上一个字段（1-100的随机数）是为了防止MD5被字典反向破解
+        // 这里多加上一个字段（签名）是为了防止MD5被字典反向破解
         user.setPassword(Util.getMd5(user.getPassword() + PASSWORD_APPEND));
         userMapper.insertUser(user);
 

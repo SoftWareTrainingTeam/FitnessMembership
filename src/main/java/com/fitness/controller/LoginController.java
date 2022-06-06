@@ -56,6 +56,7 @@ public class LoginController {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             ImageIO.write(image, "png", stream);
             base64Image = "data:image/png;base64," + Base64Utils.encodeToString(stream.toByteArray());
+            // Base64Utils是Spring框架提供的工具类
         } catch (IOException e) {
             logger.error("响应验证码失败" + e.getMessage());
             result.setCode(ERROR);
@@ -86,7 +87,6 @@ public class LoginController {
             result.setMsg("验证码错误");
             return result;
         }
-
         result = userService.login(map.get("username"), map.get("password"));
 
         return result;

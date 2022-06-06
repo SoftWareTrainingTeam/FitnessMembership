@@ -30,8 +30,8 @@ public class SignInController {
      * @param identityCode
      * @return
      */
-    @PostMapping(path = "/api/calender/{identityCode}")
-    public Result<?> getCalender(@PathVariable("identityCode") String identityCode){
-        return signInService.getCalender(identityCode);
+    @PostMapping(path = "/api/calender/{identityCode}/{yearMonth}")
+    public Result<?> getCalender(@PathVariable("identityCode") String identityCode ,@PathVariable("yearMonth") String yearMonth){
+        return signInService.getCalender(identityCode,yearMonth);
     }
 }

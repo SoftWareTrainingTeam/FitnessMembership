@@ -24,14 +24,36 @@
         </association>
     </resultMap>
 
+        <select id="getAllCourseCoach" resultMap="course_coach">
+            select course_info.course_id, course_name, coach.coach_id, coach_name
+            from course_info,
+                 course_coach,
+                 coach
+            where course_info.course_id = course_coach.course_id
+              and course_coach.coach_id = coach.coach_id
+        </select>
+
+<!--    <resultMap id="course_coach" type="CourseCoach">
+        <association property="coach" javaType="Coach">
+            <id property="coachId" column="coach_id"/>
+            <result property="coachName" column="coach_name"/>
+        </association>
+        <association property="courseInfo" javaType="CourseInfo">
+&lt;!&ndash;            <id property="courseId" column="course_id"/>&ndash;&gt;
+            <result property="courseName" column="course_name"/>
+        </association>
+    </resultMap>
+
     <select id="getAllCourseCoach" resultMap="course_coach">
-        select course_info.course_id, course_name, coach.coach_id, coach_name
-        from course_info,
-             course_coach,
-             coach
-        where course_info.course_id = course_coach.course_id
-          and course_coach.coach_id = coach.coach_id
-    </select>
+        SELECT course_info.course_id, course_name, a.coach_name
+        FROM course_info
+                 LEFT JOIN
+             (SELECT coach.coach_id, coach_name, course_coach.course_id
+              FROM coach,
+                   course_coach
+              where course_coach.coach_id = coach.coach_id) a
+             ON course_info.course_id = a.course_id
+    </select>-->
 
     <select id="selectByCoach" resultMap="course_coach">
         select course_info.course_id, course_name, coach.coach_id, coach_name
@@ -40,7 +62,7 @@
              coach
         where course_info.course_id = course_coach.course_id
           and course_coach.coach_id = coach.coach_id
-and (coach.coach_id LIKE ('%',#{coachKey},'%') or coach_name LIKE ('%',#{coachKey},'%'))
+          and (coach.coach_id LIKE ('%', #{coachKey}, '%') or coach_name LIKE ('%', #{coachKey}, '%'))
     </select>
 
     <select id="selectByCourse" resultMap="course_coach">
@@ -50,13 +72,13 @@ and (coach.coach_id LIKE ('%',#{coachKey},'%') or coach_name LIKE ('%',#{coachKe
              coach
         where course_info.course_id = course_coach.course_id
           and course_coach.coach_id = coach.coach_id
-          and (course_info.course_id LIKE ('%',#{courseKey},'%') or course_name LIKE ('%',#{courseKey},'%'))
+          and (course_info.course_id LIKE ('%', #{courseKey}, '%') or course_name LIKE ('%', #{courseKey}, '%'))
     </select>
 
     <select id="selectOne" resultType="CourseCoach">
-        select course_id,coach_id
-form course_coach
-        where course_id = #{courseId} and coach_id = #{coachId}
+        select course_id,
+               coach_id
+                   form course_coach where course_id = #{courseId} and coach_id = #{coachId}
     </select>
 
     <!--这里的参数就不是对象了，因为对象的属性都是引用-->
