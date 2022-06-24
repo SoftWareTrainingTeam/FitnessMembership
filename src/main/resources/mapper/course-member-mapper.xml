@@ -15,6 +15,7 @@
         </association>
     </resultMap>
 
+    <!--以下两个方法有问题-->
     <select id="getAllCourseMember" resultMap="course_member">
         select course_info.course_id, course_name, member.member_id, member.name
         from course_info,
@@ -62,4 +63,8 @@ where course_id=#{courseId} and member_id=#{memberId}
         where course_id = #{courseId}
           and member_id = #{memberId}
     </delete>
+
+    <select id="getMemberCourseNumber" resultType="java.lang.Integer">
+        select count(*) from course_member where member_id = #{memberId}
+    </select>
 </mapper>

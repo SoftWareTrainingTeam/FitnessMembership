@@ -20,7 +20,6 @@
     <mvc:default-servlet-handler/>
 
     <!--    4. 下面的都是配置字符返回编码的-->
-
     <bean id="utf8Charset" class="java.nio.charset.Charset"
           factory-method="forName">
         <constructor-arg value="UTF-8"/>

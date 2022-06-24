@@ -26,12 +26,9 @@ public class CourseInfoServiceImpl implements CourseInfoService {
 
   private CourseInfoMapper courseInfoMapper;
 
-  private CourseMapper courseMapper;
-
   @Autowired
-  public CourseInfoServiceImpl(CourseInfoMapper courseInfoMapper, CourseMapper courseMapper) {
+  public CourseInfoServiceImpl(CourseInfoMapper courseInfoMapper) {
     this.courseInfoMapper = courseInfoMapper;
-    this.courseMapper = courseMapper;
   }
   @Override
   public Result<PageInfo<CourseInfo>> getCourseInfoByPage(Integer startPage, Integer pageSize) {
@@ -73,7 +70,7 @@ public class CourseInfoServiceImpl implements CourseInfoService {
 
   @Override
   public Result deleteCourseInfo(String id) {
-    if(courseMapper.getCourseInfoNumber(id) > 0) {
+    if(courseInfoMapper.getCourseInfoNumber(id) > 0) {
       return new Result(Result.PARAMETER_ERROR, "该课程被选修中，暂不能删除~");
     }
     courseInfoMapper.deleteCourseInfo(id);

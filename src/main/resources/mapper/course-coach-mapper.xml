@@ -98,4 +98,9 @@
         where course_id = #{courseId}
           and coach_id = #{coachId}
     </delete>
+
+    <select id="getCoachCourseNumber" resultType="java.lang.Integer">
+        select count(*) from course_coach where coach_id = #{coachId}
+    </select>
+
 </mapper>

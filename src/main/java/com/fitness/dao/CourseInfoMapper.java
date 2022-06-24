@@ -57,4 +57,11 @@ public interface CourseInfoMapper {
    * @return 课程信息数量
    */
   Integer getAllCourseInfoNumber();
+
+  /**
+   * 获取课程被选的数量
+   * @param courseId
+   * @return
+   */
+  Integer getCourseInfoNumber(String courseId);
 }

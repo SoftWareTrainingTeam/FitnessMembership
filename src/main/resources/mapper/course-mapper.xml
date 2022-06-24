@@ -87,19 +87,4 @@
     <delete id="deleteCourse">
         delete from course where member_id = #{memberId}
     </delete>
-
-    <!--9. 根据会员id获取所选课程信息-->
-    <select id="getMemberCourseNumber" resultType="java.lang.Integer">
-        select count(*) from course where member_id = #{memberId}
-    </select>
-
-    <!--10. 根据教练id获取所教授课程-->
-    <select id="getCoachCourseNumber" resultType="java.lang.Integer">
-        select count(*) from course where coach_id = #{coachId}
-    </select>
-
-    <!--11. 根据课程信息id获取该课程被选数量-->
-    <select id="getCourseInfoNumber" resultType="java.lang.Integer">
-        select count(*) from course where course_id = #{courseId}
-    </select>
 </mapper>

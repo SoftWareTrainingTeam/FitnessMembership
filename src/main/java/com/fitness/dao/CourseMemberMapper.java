@@ -53,4 +53,11 @@ public interface CourseMemberMapper {
      * @param memberId
      */
     void deleteCourseMember(@Param("courseId") int courseId,@Param("memberId") int memberId);
+
+    /**
+     * 获取会员的课程数量
+     * @param memberId
+     * @return
+     */
+    Integer getMemberCourseNumber(String memberId);
 }

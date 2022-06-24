@@ -1,6 +1,7 @@
 package com.fitness.service.impl;
 
 import com.fitness.dao.CoachMapper;
+import com.fitness.dao.CourseCoachMapper;
 import com.fitness.dao.CourseMapper;
 import com.fitness.entity.Coach;
 import com.fitness.entity.Result;
@@ -15,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.fitness.entity.Result.OK;
+import static com.fitness.entity.Result.PARAMETER_ERROR;
+
 /**
  * @author: chiatso
  * @create: 2022-05-22 0:50
@@ -26,12 +30,12 @@ public class CoachServiceImpl implements CoachService {
 
   private CoachMapper coachMapper;
 
-  private CourseMapper courseMapper;
+  private CourseCoachMapper courseCoachMapper;
 
   @Autowired
-  public CoachServiceImpl(CoachMapper coachMapper, CourseMapper courseMapper) {
+  public CoachServiceImpl(CoachMapper coachMapper, CourseCoachMapper courseCoachMapper) {
     this.coachMapper = coachMapper;
-    this.courseMapper = courseMapper;
+    this.courseCoachMapper=courseCoachMapper;
   }
 
   @Override
@@ -42,7 +46,7 @@ public class CoachServiceImpl implements CoachService {
     Page<Coach> coaches = PageHelper.startPage(startPage, pageSize);
     List<Coach> allCoaches = coachMapper.getAllCoaches();
     PageInfo<Coach> pageInfo = new PageInfo<>(allCoaches);
-    return new Result<PageInfo<Coach>>(Result.OK, "查询成功~", pageInfo);
+    return new Result<PageInfo<Coach>>(OK, "查询成功~", pageInfo);
   }
 
   @Override
@@ -53,33 +57,33 @@ public class CoachServiceImpl implements CoachService {
     Page<Coach> coaches = PageHelper.startPage(startPage, pageSize);
     List<Coach> allCoaches = coachMapper.getCoachByVague(keyword);
     PageInfo<Coach> pageInfo = new PageInfo<>(allCoaches);
-    return new Result<PageInfo<Coach>>(Result.OK, "查询成功~", pageInfo);
+    return new Result<PageInfo<Coach>>(OK, "查询成功~", pageInfo);
   }
 
   @Override
   public Result<Coach> getCoachById(String id) {
     Coach coach = coachMapper.getCoachById(id);
-    return new Result<Coach>(Result.OK, "查询成功~", coach);
+    return new Result<Coach>(OK, "查询成功~", coach);
   }
 
   @Override
   public Result insertCoach(Coach coach) {
     coachMapper.insertCoach(coach);
-    return new Result(Result.OK, "认证成功~");
+    return new Result(OK, "认证成功~");
   }
 
   @Override
   public Result modifyCoach(Coach coach) {
     coachMapper.updateCoach(coach);
-    return new Result(Result.OK, "修改成功~");
+    return new Result(OK, "修改成功~");
   }
 
   @Override
-  public Result deleteCoach(String id) {
-    if(courseMapper.getCoachCourseNumber(id) > 0) {
-      return new Result(Result.PARAMETER_ERROR, "该教练有未完成的课程，暂不能注销~");
+  public Result<?> deleteCoach(String id) {
+    if(courseCoachMapper.getCoachCourseNumber(id) > 0) {
+      return new Result(PARAMETER_ERROR, "该教练有未完成的课程，暂不能注销~");
     }
     coachMapper.deleteCoach(id);
-    return new Result(Result.OK, "注销成功~");
+    return new Result(OK, "注销成功~");
   }
 }

@@ -95,4 +95,8 @@ where course_info.course_id = course_coach.course_id and course_coach.coach_id=c
                                price = #{price},capacity=#{capacity}
         where course_id = #{courseId}
     </update>
+
+    <select id="getCourseInfoNumber" resultType="java.lang.Integer">
+        select count(*) from course_info where course_id = #{courseId}
+    </select>
 </mapper>

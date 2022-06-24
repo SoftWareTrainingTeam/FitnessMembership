@@ -47,4 +47,11 @@ public interface CourseCoachMapper {
      * @param coachId
      */
     void deleteCourseCoach(@Param("courseId") int courseId,@Param("coachId") int coachId);
+
+    /**
+     * 获取教练的所授课程数量
+     * @param coachId
+     * @return
+     */
+    Integer getCoachCourseNumber(String coachId);
 }
